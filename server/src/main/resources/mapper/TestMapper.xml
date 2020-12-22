@@ -64,7 +64,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `name`
+    id, name
   </sql>
   <select id="selectByExample" parameterType="cn.wyslkl.server.domain.TestExample" resultMap="BaseResultMap">
     select
@@ -97,7 +97,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.wyslkl.server.domain.Test">
-    insert into test (id, `name`)
+    insert into test (id, name)
     values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.wyslkl.server.domain.Test">
@@ -107,7 +107,7 @@
         id,
       </if>
       <if test="name != null">
-        `name`,
+        name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -132,7 +132,7 @@
         id = #{record.id,jdbcType=CHAR},
       </if>
       <if test="record.name != null">
-        `name` = #{record.name,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -142,7 +142,7 @@
   <update id="updateByExample" parameterType="map">
     update test
     set id = #{record.id,jdbcType=CHAR},
-      `name` = #{record.name,jdbcType=VARCHAR}
+      name = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -151,14 +151,14 @@
     update test
     <set>
       <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.wyslkl.server.domain.Test">
     update test
-    set `name` = #{name,jdbcType=VARCHAR}
+    set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
 </mapper>
