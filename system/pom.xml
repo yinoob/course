@@ -36,6 +36,11 @@
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>cn.wyslkl</groupId>
+            <artifactId>server</artifactId>
+        </dependency>
+
     </dependencies>
 
 
