@@ -1,4 +1,4 @@
-package cn.wyslkl.system;
+package cn.wyslkl.system.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
