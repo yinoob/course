@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>你好</h1>
+    <h1>你好，欢迎！</h1>
   </div>
 </template>
 <script>
@@ -10,11 +10,6 @@
       $("body").removeClass("login-layout light-login");
       $("body").attr("class","noskin");
     },
-    methods:{
-      login(){
-        this.$router.push("/admin")
-      }
-    }
   }
 </script>
 
