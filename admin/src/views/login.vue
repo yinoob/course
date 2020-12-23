@@ -83,10 +83,14 @@
 </template>
 <script>
   export default {
-    name: 'login',
+    name: "login",
+    mounted: function() {
+      $("body").removeClass("noskin");
+      $("body").attr("class", "login-layout light-login");
+    },
     methods:{
       login(){
-        this.$router.push("/admin")
+        this.$router.push("/welcome")
       }
     }
   }
