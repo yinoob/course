@@ -5,12 +5,7 @@
         <div class="col-sm-10 col-sm-offset-1">
           <div class="login-container">
             <div class="center">
-              <h1>
-                <i class="ace-icon fa fa-leaf green"></i>
-                <span class="red">Ace</span>
-                <span class="white" id="id-text2">Application</span>
-              </h1>
-              <h4 class="blue" id="id-company-text">&copy; 松哥课堂后台管理</h4>
+              <h1 class="blue" id="id-company-text">松哥课堂后台管理</h1>
             </div>
 
             <div class="space-6"></div>
