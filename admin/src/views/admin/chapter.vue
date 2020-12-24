@@ -1,4 +1,11 @@
 <template>
+    <div>
+        <p>
+    <button v-on:click="list" class="btn btn-white btn-default btn-round">
+        <i class="ace-icon fa fa-refresh"></i>
+        刷新
+    </button>
+        </p>
     <table id="simple-table" class="table  table-bordered table-hover">
         <thead>
         <tr>
@@ -74,6 +81,7 @@
 
         </tbody>
     </table>
+    </div>
 </template>
 <script>
     export default {
