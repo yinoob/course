@@ -971,3 +971,22 @@
         </tbody>
     </table>
 </template>
+<script>
+    export default {
+        name: "chapter",
+        mounted: function () {
+            let _this = this;
+            _this.list();
+
+        },
+        methods:{
+            list() {
+                let _this = this;
+                _this.$ajax.get('http://localhost:9001/business/admin/chapter/list')
+                .then((response)=>{
+                    console.log("查询章列表结果：",response);
+                })
+            }
+        }
+    }
+</script>
