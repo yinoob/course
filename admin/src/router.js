@@ -29,7 +29,7 @@ export default new Router({
             name: "welcome",
             component: Welcome,
         },{
-            path: "chapter",
+            path: "business/chapter",
             name: "chapter",
             component: Chapter,
         }]
