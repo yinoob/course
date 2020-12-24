@@ -1,8 +1,9 @@
-package cn.wyslkl.business.controller;
+package cn.wyslkl.business.controller.admin;
 
 
-import cn.wyslkl.server.domain.Test;
-import cn.wyslkl.server.service.TestService;
+
+import cn.wyslkl.server.dto.ChapterDto;
+import cn.wyslkl.server.service.ChapterService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +15,14 @@ import java.util.List;
 @RestController
 @ComponentScan("cn.wyslkl")
 @MapperScan("cn.wyslkl.server.mapper")
-public class TestController {
+@RequestMapping("/admin")
+public class ChapterController {
 
     @Resource
-    private TestService testService;
+    private ChapterService chapterService;
 
-    @RequestMapping("/test")
-    public List<Test> test(){
-        return testService.list();
+    @RequestMapping("/chapter")
+    public List<ChapterDto> chapter(){
+        return chapterService.list();
     }
 }
