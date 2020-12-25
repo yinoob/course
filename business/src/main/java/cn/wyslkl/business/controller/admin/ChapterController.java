@@ -4,6 +4,7 @@ package cn.wyslkl.business.controller.admin;
 
 import cn.wyslkl.server.dto.ChapterDto;
 import cn.wyslkl.server.dto.PageDto;
+import cn.wyslkl.server.dto.ResponseDto;
 import cn.wyslkl.server.service.ChapterService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,15 +27,19 @@ public class ChapterController {
     private ChapterService chapterService;
 
     @PostMapping("/list")
-    public PageDto list(PageDto pageDto){
+    public ResponseDto list(PageDto pageDto){
+        ResponseDto responseDto=new ResponseDto();
         chapterService.list(pageDto);
-        return pageDto;
+        responseDto.setContent(pageDto);
+        return responseDto;
     }
 
     @PostMapping("/save")
-    public ChapterDto save(ChapterDto chapterDto){
+    public ResponseDto save(ChapterDto chapterDto){
+        ResponseDto responseDto=new ResponseDto();
         chapterService.save(chapterDto);
-        return chapterDto;
+        responseDto.setContent(chapterDto);
+        return responseDto;
     }
 
    /**

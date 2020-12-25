@@ -87,7 +87,7 @@
 
         </tbody>
     </table>
-        <div class="modal fade" tabindex="-1" role="dialog">
+        <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -149,7 +149,7 @@
             add() {
                 let _this = this;
                 _this.chapter = {};
-                $(".modal").modal("show");
+                $("#form-modal").modal("show");
             },
 
             list(page) {
@@ -160,8 +160,8 @@
                 },),{emulateJSON:true})
                     .then((response)=>{
                         console.log("查询章列表结果：",response);
-                        _this.chapters=response.data.list;
-                        _this.$refs.pagination.render(page, response.data.total);
+                        _this.chapters=response.data.content.list;
+                        _this.$refs.pagination.render(page, response.data.content.total);
                     })
             },
 
@@ -174,6 +174,14 @@
                     qs.stringify(_this.chapter))
                     .then((response)=>{
                         console.log("新增大章结果：",response);
+                        let resp = response.data;
+                        if (resp.success) {
+                            $("#form-modal").modal("hide");
+                            _this.list(1);
+                            //Toast.success("保存成功！");
+                        } else {
+                            //Toast.warning(resp.message)
+                        }
 
                     })
             },
