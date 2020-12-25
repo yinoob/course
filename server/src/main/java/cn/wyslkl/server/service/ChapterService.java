@@ -5,10 +5,12 @@ import cn.wyslkl.server.domain.ChapterExample;
 import cn.wyslkl.server.dto.ChapterDto;
 import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.mapper.ChapterMapper;
+import cn.wyslkl.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -37,6 +39,16 @@ public class ChapterService {
         pageDto.setList(chapterDtoList);
 
 
+    }
+
+    /**
+     * 保存，id有值时更新，无值时新增
+     */
+    public void save(ChapterDto chapterDto) {
+        chapterDto.setId(UuidUtil.getShortUuid());
+        Chapter chapter = new Chapter();
+        BeanUtils.copyProperties(chapterDto,chapter);
+        chapterMapper.insert(chapter);
     }
 
    /** public List<ChapterDto> list(){

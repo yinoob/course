@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static org.springframework.boot.Banner.Mode.LOG;
+
 @RestController
 @ComponentScan("cn.wyslkl")
 @MapperScan("cn.wyslkl.server.mapper")
 @ResponseBody
+@CrossOrigin
 @RequestMapping(value = "/admin/chapter", method = RequestMethod.POST)//, consumes="application/json", produces="application/json"
 public class ChapterController {
 
@@ -26,6 +29,12 @@ public class ChapterController {
     public PageDto list(PageDto pageDto){
         chapterService.list(pageDto);
         return pageDto;
+    }
+
+    @PostMapping("/save")
+    public ChapterDto save(ChapterDto chapterDto){
+        chapterService.save(chapterDto);
+        return chapterDto;
     }
 
    /**
