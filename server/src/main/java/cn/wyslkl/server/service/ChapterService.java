@@ -26,8 +26,7 @@ public class ChapterService {
         List<Chapter> chapterList = chapterMapper.selectByExample(chapterExample);
 
         PageInfo<Chapter> pageInfo=new PageInfo<>(chapterList);
-        pageDto.setTotal(pageInfo.getTotal());
-
+        pageDto.setTotal(pageInfo.getTotal());//pageInfo.getTotal()
         List<ChapterDto> chapterDtoList=new ArrayList<ChapterDto>();
         for (int i = 0; i < chapterList.size(); i++) {
             Chapter chapter=chapterList.get(i);

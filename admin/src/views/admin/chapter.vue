@@ -1,11 +1,12 @@
 <template>
     <div>
         <p>
-    <button v-on:click="list" class="btn btn-white btn-default btn-round">
+    <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
         <i class="ace-icon fa fa-refresh"></i>
         刷新
     </button>
         </p>
+        <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="8"></pagination>
     <table id="simple-table" class="table  table-bordered table-hover">
         <thead>
         <tr>
@@ -84,7 +85,13 @@
     </div>
 </template>
 <script>
+    import Pagination from "../../components/pagination";
+    import axios from 'axios'
+    import qs from 'qs'
+
+
     export default {
+        components: {Pagination},
         name: "chapter",
         data: function() {
             return {
@@ -94,15 +101,20 @@
         },
         mounted: function () {
             let _this = this;
+            _this.$refs.pagination.size = 5;
             _this.list();
         },
         methods:{
-            list() {
+            list(page) {
                 let _this = this;
-                _this.$ajax.get('http://localhost:8999/business/admin/chapter/list?page=1&size=1')
+                axios.post('http://localhost:8999/business/admin/chapter/list', qs.stringify({
+                    page: page,
+                    size: _this.$refs.pagination.size,
+                },),{emulateJSON:true})
                     .then((response)=>{
                         console.log("查询章列表结果：",response);
                         _this.chapters=response.data.list;
+                        _this.$refs.pagination.render(page, response.data.total);
                     })
             }
         }

@@ -1,4 +1,4 @@
-package cn.wyslkl.business.config;//package com.course.server.config;
+package cn.wyslkl.business.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -15,7 +15,8 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders(CorsConfiguration.ALL)
                 .allowedMethods(CorsConfiguration.ALL)
                 .allowCredentials(true)
-                .maxAge(36000);  //1小时内不需要再预检（发OPTIONS请求）
+                .maxAge(3600); // 1小时内不需要再预检（发OPTIONS请求）
     }
 
 }
+

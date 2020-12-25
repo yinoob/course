@@ -15,14 +15,14 @@ import java.util.List;
 @RestController
 @ComponentScan("cn.wyslkl")
 @MapperScan("cn.wyslkl.server.mapper")
-@RequestMapping("/admin/chapter")
-@CrossOrigin
+@ResponseBody
+@RequestMapping(value = "/admin/chapter", method = RequestMethod.POST)//, consumes="application/json", produces="application/json"
 public class ChapterController {
 
     @Resource
     private ChapterService chapterService;
 
-    @RequestMapping("/list")
+    @PostMapping("/list")
     public PageDto list(PageDto pageDto){
         chapterService.list(pageDto);
         return pageDto;
