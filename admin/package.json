@@ -11,7 +11,7 @@
     "axios": "^0.21.1",
     "axois": "^0.0.1-security",
     "core-js": "^3.6.5",
-    "jquery": "^3.5.1",
+    "jquery": "^3.0.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.0",
     "vue-router": "^3.4.9"

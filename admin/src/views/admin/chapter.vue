@@ -125,11 +125,13 @@
 
             list(page) {
                 let _this = this;
+                //Loading.show();
                 axios.post('http://localhost:8999/business/admin/chapter/list', qs.stringify({
                     page: page,
                     size: _this.$refs.pagination.size,
                 },),{emulateJSON:true})
                     .then((response)=>{
+                        //Loading.hide();
                         console.log("查询章列表结果：",response);
                         _this.chapters=response.data.content.list;
                         _this.$refs.pagination.render(page, response.data.content.total);
@@ -141,9 +143,11 @@
              */
             save() {
                 let _this = this;
+                //Loading.show();
                 axios.post('http://localhost:8999/business/admin/chapter/save',
                     qs.stringify(_this.chapter))
                     .then((response)=>{
+                        //Loading.hide();
                         console.log("新增大章结果：",response);
                         let resp = response.data;
                         if (resp.success) {
