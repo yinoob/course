@@ -143,6 +143,12 @@
              */
             save() {
                 let _this = this;
+
+                // 保存校验
+                if (!Validator.require(_this.chapter.name, "名称")
+                    || !Validator.length(_this.chapter.courseId, "课程ID", 1, 8)) {
+                    return;
+                }
                 //Loading.show();
                 axios.post('http://localhost:8999/business/admin/chapter/save',
                     qs.stringify(_this.chapter))
