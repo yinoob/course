@@ -126,7 +126,7 @@
             list(page) {
                 let _this = this;
                 //Loading.show();
-                axios.post('http://localhost:8999/business/admin/chapter/list', qs.stringify({
+                axios.post(process.env.VUE_APP_SERVER + '/business/admin/chapter/list', qs.stringify({
                     page: page,
                     size: _this.$refs.pagination.size,
                 },),{emulateJSON:true})
@@ -151,7 +151,7 @@
                     return;
                 }
                 //Loading.show();
-                axios.post('http://localhost:8999/business/admin/chapter/save',
+                axios.post(process.env.VUE_APP_SERVER + '/business/admin/chapter/save',
                     qs.stringify(_this.chapter))
                     .then((response)=>{
                         //Loading.hide();
@@ -175,7 +175,7 @@
                 let _this = this;
                     Confirm.show("删除大章后不可恢复，确认删除？", function () {
                     //Loading.show();
-                    _this.axios.post('http://localhost:8999/business/admin/chapter/delete',
+                    _this.axios.post(process.env.VUE_APP_SERVER + '/business/admin/chapter/delete',
                         qs.stringify({id: id})).then((response)=>{
                         //Loading.hide();
                         console.log("id为",id);

@@ -50,8 +50,8 @@ public class ${Domain}Controller {
     /**
      * 删除
      */
-    @PostMapping("/delete/{id}")
-    public ResponseDto delete(@PathVariable String id) {
+    @PostMapping("/delete")
+    public ResponseDto delete( String id) {
         ResponseDto responseDto = new ResponseDto();
         ${domain}Service.delete(id);
         return responseDto;
