@@ -7,6 +7,8 @@ import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.dto.ResponseDto;
 import cn.wyslkl.server.service.ChapterService;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,9 @@ public class ChapterController {
 
     @Resource
     private ChapterService chapterService;
+
+    private static final Logger LOG = LoggerFactory.getLogger(ChapterController.class);
+    public static final String BUSINESS_NAME = "大章";
 
     @PostMapping("/list")
     public ResponseDto list(PageDto pageDto){
