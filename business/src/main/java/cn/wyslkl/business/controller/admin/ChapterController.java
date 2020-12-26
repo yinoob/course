@@ -42,6 +42,16 @@ public class ChapterController {
         return responseDto;
     }
 
+    /**
+     * 删除
+     */
+    @PostMapping("/delete")
+    public ResponseDto delete(String id) {
+        ResponseDto responseDto = new ResponseDto();
+        chapterService.delete(id);
+        return responseDto;
+    }
+
    /**
    public List<ChapterDto> list(){
        return chapterService.list();

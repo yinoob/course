@@ -69,6 +69,14 @@ public class ChapterService {
         chapterMapper.updateByPrimaryKey(chapter);
     }
 
+
+    /**
+     * 删除
+     */
+    public void delete(String id) {
+        chapterMapper.deleteByPrimaryKey(id);
+    }
+
    /** public List<ChapterDto> list(){
         PageHelper.startPage(1,1);
         ChapterExample chapterExample = new ChapterExample();

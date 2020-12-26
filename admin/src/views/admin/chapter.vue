@@ -157,6 +157,26 @@
                     })
             },
 
+            /**
+             * 点击【删除】
+             */
+            del(id) {
+                let _this = this;
+                //Confirm.show("删除大章后不可恢复，确认删除？", function () {
+                    //Loading.show();
+                    _this.axios.post('http://localhost:8999/business/admin/chapter/delete',
+                        qs.stringify({id: id})).then((response)=>{
+                        //Loading.hide();
+                        console.log("id为",id);
+                        let resp = response.data;
+                        if (resp.success) {
+                            _this.list(1);
+                            //Toast.success("删除成功！");
+                        }
+                    })
+                //});
+            },
+
         }
     }
 </script>
