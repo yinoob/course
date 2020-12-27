@@ -104,7 +104,7 @@
     data: function() {
       return {
         ${domain}: {},
-        [],
+
         <#list fieldList as field>
           <#if field.enums>
         ${field.enumsConst}: ${field.enumsConst},

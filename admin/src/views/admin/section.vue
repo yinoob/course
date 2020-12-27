@@ -128,6 +128,10 @@
       return {
         section: {},
         sections: [],
+        //SECTION_CHARGE: SECTION_CHARGE,
+        //FILE_USE: FILE_USE,
+        course: {},
+        chapter: {},
       }
     },
     mounted: function() {
@@ -192,7 +196,7 @@
         }
 
         //Loading.show();
-        axios.post(process.env.VUE_APP_SERVER + '/business/admin/section/save', qs.stringify(_this.chapter)).then((response)=>{
+        axios.post(process.env.VUE_APP_SERVER + '/business/admin/section/save', qs.stringify(_this.section)).then((response)=>{
           //Loading.hide();
           let resp = response.data;
           if (resp.success) {
