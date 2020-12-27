@@ -7,8 +7,8 @@ import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.mapper.${Domain}Mapper;
 import cn.wyslkl.server.util.CopyUtil;
 import cn.wyslkl.server.util.UuidUtil;
-import cn.wyslkl.pagehelper.PageHelper;
-import cn.wyslkl.pagehelper.PageInfo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 

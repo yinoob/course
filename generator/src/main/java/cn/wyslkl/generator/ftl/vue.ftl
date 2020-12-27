@@ -104,7 +104,7 @@
     data: function() {
       return {
         ${domain}: {},
-
+        [],
         <#list fieldList as field>
           <#if field.enums>
         ${field.enumsConst}: ${field.enumsConst},
@@ -181,7 +181,7 @@
         }
 
         //Loading.show();
-        axios.post(process.env.VUE_APP_SERVER + '/${module}/admin/${domain}/save', qs.stringify(_this.chapter)).then((response)=>{
+        axios.post(process.env.VUE_APP_SERVER + '/${module}/admin/${domain}/save', qs.stringify(_this.${domain})).then((response)=>{
           //Loading.hide();
           let resp = response.data;
           if (resp.success) {

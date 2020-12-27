@@ -1,9 +1,9 @@
-package cn.wyslkl.${module}.controller.admin;
+package cn.wyslkl.business.controller.admin;
 
-import cn.wyslkl.server.dto.${Domain}Dto;
+import cn.wyslkl.server.dto.CourseDto;
 import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.dto.ResponseDto;
-import cn.wyslkl.server.service.${Domain}Service;
+import cn.wyslkl.server.service.CourseService;
 import cn.wyslkl.server.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +18,14 @@ import javax.annotation.Resource;
 @MapperScan("cn.wyslkl.server.mapper")
 @ResponseBody
 @CrossOrigin
-@RequestMapping("/admin/${domain}")
-public class ${Domain}Controller {
+@RequestMapping("/admin/course")
+public class CourseController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(${Domain}Controller.class);
-    public static final String BUSINESS_NAME = "${tableNameCn}";
+    private static final Logger LOG = LoggerFactory.getLogger(CourseController.class);
+    public static final String BUSINESS_NAME = "课程表";
 
     @Resource
-    private ${Domain}Service ${domain}Service;
+    private CourseService courseService;
 
     /**
      * 列表查询
@@ -33,7 +33,7 @@ public class ${Domain}Controller {
     @PostMapping("/list")
     public ResponseDto list( PageDto pageDto) {
         ResponseDto responseDto = new ResponseDto();
-        ${domain}Service.list(pageDto);
+        courseService.list(pageDto);
         responseDto.setContent(pageDto);
         return responseDto;
     }
@@ -42,21 +42,15 @@ public class ${Domain}Controller {
      * 保存，id有值时更新，无值时新增
      */
     @PostMapping("/save")
-    public ResponseDto save( ${Domain}Dto ${domain}Dto) {
+    public ResponseDto save( CourseDto courseDto) {
         // 保存校验
-        <#list fieldList as field>
-        <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt" && field.nameHump!="sort">
-            <#if !field.nullAble>
-        ValidatorUtil.require(${domain}Dto.get${field.nameBigHump}(), "${field.nameCn}");
-            </#if>
-            <#if (field.length > 0)>
-        ValidatorUtil.length(${domain}Dto.get${field.nameBigHump}(), "${field.nameCn}", 1, ${field.length?c});
-            </#if>
-        </#if>
-        </#list>
+        ValidatorUtil.require(courseDto.getName(), "名称");
+        ValidatorUtil.length(courseDto.getName(), "名称", 1, 50);
+        ValidatorUtil.length(courseDto.getSummary(), "概述", 1, 2000);
+        ValidatorUtil.length(courseDto.getImage(), "封面", 1, 100);
         ResponseDto responseDto = new ResponseDto();
-        ${domain}Service.save(${domain}Dto);
-        responseDto.setContent(${domain}Dto);
+        courseService.save(courseDto);
+        responseDto.setContent(courseDto);
         return responseDto;
     }
 
@@ -66,7 +60,7 @@ public class ${Domain}Controller {
     @PostMapping("/delete")
     public ResponseDto delete( String id) {
         ResponseDto responseDto = new ResponseDto();
-        ${domain}Service.delete(id);
+        courseService.delete(id);
         return responseDto;
     }
 }
