@@ -45,11 +45,14 @@
               <button v-on:click="toChapter(course)" class="btn btn-xs btn-info">
                 <i class="ace-icon fa fa-pencil bigger-120"></i>
                 大章
+              </button>&nbsp;&nbsp;
+              <button v-on:click="toContent(course)" class="btn btn-white btn-xs btn-info btn-round">
+                内容
               </button>&nbsp;
               <button v-on:click="edit(course)" class="btn btn-xs btn-info">
                 <i class="ace-icon fa fa-pencil bigger-120"></i>
                 编辑
-              </button>&nbsp;
+              </button>&nbsp;&nbsp;
               <button v-on:click="del(course.id)" class="btn btn-xs btn-danger">
                 <i class="ace-icon fa fa-trash-o bigger-120"></i>
                 删除
@@ -307,6 +310,14 @@
         let _this = this;
         SessionStorage.set(SESSION_KEY_COURSE, course);
         _this.$router.push("/business/chapter");
+      },
+      /**
+       * 点击【内容】
+       */
+      toContent(course) {
+        let _this = this;
+        SessionStorage.set(SESSION_KEY_COURSE, course);
+        _this.$router.push("/business/content");
       },
     }
   }

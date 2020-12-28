@@ -1,5 +1,6 @@
 package cn.wyslkl.business.controller.admin;
 
+import cn.wyslkl.server.dto.CourseContentDto;
 import cn.wyslkl.server.dto.CourseDto;
 import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.dto.ResponseDto;
@@ -64,6 +65,21 @@ public class CourseController {
     public ResponseDto delete( String id) {
         ResponseDto responseDto = new ResponseDto();
         courseService.delete(id);
+        return responseDto;
+    }
+
+    @GetMapping("/find-content/{id}")
+    public ResponseDto findContent(@PathVariable String id) {
+        ResponseDto responseDto = new ResponseDto();
+        CourseContentDto contentDto = courseService.findContent(id);
+        responseDto.setContent(contentDto);
+        return responseDto;
+    }
+
+    @PostMapping("/save-content")
+    public ResponseDto saveContent(@RequestBody CourseContentDto contentDto) {
+        ResponseDto responseDto = new ResponseDto();
+        courseService.saveContent(contentDto);
         return responseDto;
     }
 
