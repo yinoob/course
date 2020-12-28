@@ -1,5 +1,12 @@
 <template>
   <div>
+    <h4 class="lighter">
+      <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+      <router-link to="/business/course" class="pink"> {{course.name}} </router-link>：
+      <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+      <router-link to="/business/chapter" class="pink"> {{chapter.name}} </router-link>
+    </h4>
+    <hr>
     <p>
       <button v-on:click="add()" class="btn btn-white btn-default btn-round">
         <i class="ace-icon fa fa-edit"></i>
@@ -68,7 +75,7 @@
                   <input v-model="section.title" class="form-control">
                 </div>
               </div>
-              <div class="form-group">
+              <!--<div class="form-group">
                 <label class="col-sm-2 control-label">课程</label>
                 <div class="col-sm-10">
                   <input v-model="section.courseId" class="form-control">
@@ -80,6 +87,7 @@
                   <input v-model="section.chapterId" class="form-control">
                 </div>
               </div>
+              -->
               <div class="form-group">
                 <label class="col-sm-2 control-label">视频</label>
                 <div class="col-sm-10">
@@ -139,6 +147,13 @@
     },
     mounted: function() {
       let _this = this;
+      let course = SessionStorage.get(SESSION_KEY_COURSE) || {};
+      let chapter = SessionStorage.get(SESSION_KEY_CHAPTER) || {};
+      if (Tool.isEmpty(course) || Tool.isEmpty(chapter)) {
+        _this.$router.push("/welcome");
+      }
+      _this.course = course;
+      _this.chapter = chapter;
       _this.$refs.pagination.size = 5;
       _this.list(1);
       // sidebar激活样式方法一
@@ -173,6 +188,8 @@
         axios.post(process.env.VUE_APP_SERVER + '/business/admin/section/list', qs.stringify({
           page: page,
           size: _this.$refs.pagination.size,
+          courseId: _this.course.id,
+          chapterId: _this.chapter.id
         },),{emulateJSON:true})
                 .then((response)=>{
                   //Loading.hide();
@@ -197,6 +214,8 @@
         ) {
           return;
         }
+        _this.section.courseId = _this.course.id;
+        _this.section.chapterId = _this.chapter.id;
 
         //Loading.show();
         axios.post(process.env.VUE_APP_SERVER + '/business/admin/section/save', qs.stringify(_this.section)).then((response)=>{

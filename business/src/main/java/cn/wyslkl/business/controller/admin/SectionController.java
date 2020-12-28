@@ -3,6 +3,7 @@ package cn.wyslkl.business.controller.admin;
 import cn.wyslkl.server.dto.SectionDto;
 import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.dto.ResponseDto;
+import cn.wyslkl.server.dto.SectionPageDto;
 import cn.wyslkl.server.service.SectionService;
 import cn.wyslkl.server.util.ValidatorUtil;
 import org.mybatis.spring.annotation.MapperScan;
@@ -31,10 +32,12 @@ public class SectionController {
      * 列表查询
      */
     @PostMapping("/list")
-    public ResponseDto list( PageDto pageDto) {
+    public ResponseDto list( SectionPageDto sectionPageDto) {
         ResponseDto responseDto = new ResponseDto();
-        sectionService.list(pageDto);
-        responseDto.setContent(pageDto);
+        ValidatorUtil.require(sectionPageDto.getCourseId(), "课程ID");
+        ValidatorUtil.require(sectionPageDto.getChapterId(), "大章ID");
+        sectionService.list(sectionPageDto);
+        responseDto.setContent(sectionPageDto);
         return responseDto;
     }
 
