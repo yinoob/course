@@ -14,7 +14,47 @@
 
     <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="8"></pagination>
 
-    <table id="simple-table" class="table  table-bordered table-hover">
+    <div class="row">
+      <div v-for="course in courses" class="col-md-4">
+        <div class="thumbnail search-thumbnail">
+          <img v-show="!course.image" class="media-object" src="/static/image/demo-course.jpg" />
+          <img v-show="course.image" class="media-object" v-bind:src="course.image" />
+          <div class="caption">
+            <div class="clearfix">
+              <span class="pull-right label label-grey info-label">
+                {{COURSE_LEVEL | optionKV(course.level)}}
+              </span>
+              <span class="pull-right label label-grey info-label">
+                {{COURSE_CHARGE | optionKV(course.charge)}}
+              </span>
+              <span class="pull-right label label-grey info-label">
+                {{COURSE_STATUS | optionKV(course.status)}}
+              </span>
+            </div>
+
+            <h3 class="search-title">
+              <a href="#" class="blue">{{course.name}}</a>
+            </h3>
+            <p>{{course.summary}}</p>
+            <p>
+              <button v-on:click="toChapter(course)" class="btn btn-xs btn-info">
+                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                大章
+              </button>&nbsp;
+              <button v-on:click="edit(course)" class="btn btn-xs btn-info">
+                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                编辑
+              </button>&nbsp;
+              <button v-on:click="del(course.id)" class="btn btn-xs btn-danger">
+                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                删除
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<table id="simple-table" class="table  table-bordered table-hover">
       <thead>
       <tr>
         <th>id</th>
@@ -58,6 +98,7 @@
       </tr>
       </tbody>
     </table>
+    -->
 
     <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -251,7 +292,16 @@
             }
           })
         });
-      }
+      },
+
+      /**
+       * 点击【大章】
+       */
+      toChapter(course) {
+        let _this = this;
+        SessionStorage.set(SESSION_KEY_COURSE, course);
+        _this.$router.push("/business/chapter");
+      },
     }
   }
 </script>

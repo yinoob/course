@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.context.annotation.ComponentScan;
 import org.mybatis.spring.annotation.MapperScan;
 
+
 import javax.annotation.Resource;
+
 
 @RestController
 @ComponentScan("cn.wyslkl")
@@ -19,6 +21,7 @@ import javax.annotation.Resource;
 @ResponseBody
 @CrossOrigin
 @RequestMapping("/admin/course")
+
 public class CourseController {
 
     private static final Logger LOG = LoggerFactory.getLogger(CourseController.class);
@@ -63,4 +66,6 @@ public class CourseController {
         courseService.delete(id);
         return responseDto;
     }
+
+
 }

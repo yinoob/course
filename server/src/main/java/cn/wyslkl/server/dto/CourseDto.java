@@ -3,6 +3,7 @@ package cn.wyslkl.server.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class CourseDto {
 
@@ -65,12 +66,14 @@ public class CourseDto {
      * 创建时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date createdAt;
 
     /**
      * 修改时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date updatedAt;
 
     public String getId() {

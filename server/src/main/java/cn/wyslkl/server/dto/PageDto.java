@@ -7,19 +7,19 @@ public class PageDto<T> {
     /*
     当前页码
      */
-    private int page;
+    protected int page;
 
     /*
         每页条数
          */
-    private int size;
+    protected int size;
 
     /*
     总条数
      */
-    private long total;
+    protected long total;
 
-    private List<T> list;
+    protected List<T> list;
 
     public List<T> getList() {
         return list;

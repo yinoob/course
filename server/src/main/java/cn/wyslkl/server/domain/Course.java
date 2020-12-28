@@ -1,5 +1,7 @@
 package cn.wyslkl.server.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 

@@ -3,9 +3,11 @@ package cn.wyslkl.business.controller.admin;
 
 
 import cn.wyslkl.server.dto.ChapterDto;
+import cn.wyslkl.server.dto.ChapterPageDto;
 import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.dto.ResponseDto;
 import cn.wyslkl.server.service.ChapterService;
+import cn.wyslkl.server.util.ValidatorUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +34,11 @@ public class ChapterController {
     public static final String BUSINESS_NAME = "大章";
 
     @PostMapping("/list")
-    public ResponseDto list(PageDto pageDto){
+    public ResponseDto list(ChapterPageDto chapterPageDto){
         ResponseDto responseDto=new ResponseDto();
-        chapterService.list(pageDto);
-        responseDto.setContent(pageDto);
+        ValidatorUtil.require(chapterPageDto.getCourseId(), "课程ID");
+        chapterService.list(chapterPageDto);
+        responseDto.setContent(chapterPageDto);
         return responseDto;
     }
 

@@ -3,6 +3,7 @@ package cn.wyslkl.server.service;
 import cn.wyslkl.server.domain.Chapter;
 import cn.wyslkl.server.domain.ChapterExample;
 import cn.wyslkl.server.dto.ChapterDto;
+import cn.wyslkl.server.dto.ChapterPageDto;
 import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.mapper.ChapterMapper;
 import cn.wyslkl.server.util.CopyUtil;
@@ -23,13 +24,13 @@ public class ChapterService {
     @Resource
     private ChapterMapper chapterMapper;
 
-    public void list(PageDto pageDto){
-        PageHelper.startPage(pageDto.getPage(),pageDto.getSize());
+    public void list(ChapterPageDto chapterPageDto){
+        /**PageHelper.startPage(chapterPageDto.getPage(),chapterPageDto.getSize());
         ChapterExample chapterExample = new ChapterExample();
         List<Chapter> chapterList = chapterMapper.selectByExample(chapterExample);
 
         PageInfo<Chapter> pageInfo=new PageInfo<>(chapterList);
-        pageDto.setTotal(pageInfo.getTotal());//pageInfo.getTotal()
+        chapterPageDto.setTotal(pageInfo.getTotal());//pageInfo.getTotal()
         List<ChapterDto> chapterDtoList=new ArrayList<ChapterDto>();
         for (int i = 0; i < chapterList.size(); i++) {
             Chapter chapter=chapterList.get(i);
@@ -37,7 +38,19 @@ public class ChapterService {
             BeanUtils.copyProperties(chapter,chapterDto);
             chapterDtoList.add(chapterDto);
         }
-        pageDto.setList(chapterDtoList);
+        chapterPageDto.setList(chapterDtoList);
+         **/
+        PageHelper.startPage(chapterPageDto.getPage(), chapterPageDto.getSize());
+        ChapterExample chapterExample = new ChapterExample();
+        ChapterExample.Criteria criteria = chapterExample.createCriteria();
+        if (!StringUtils.isEmpty(chapterPageDto.getCourseId())) {
+            criteria.andCourseIdEqualTo(chapterPageDto.getCourseId());
+        }
+        List<Chapter> chapterList = chapterMapper.selectByExample(chapterExample);
+        PageInfo<Chapter> pageInfo = new PageInfo<>(chapterList);
+        chapterPageDto.setTotal(pageInfo.getTotal());
+        List<ChapterDto> chapterDtoList = CopyUtil.copyList(chapterList, ChapterDto.class);
+        chapterPageDto.setList(chapterDtoList);
 
 
     }
