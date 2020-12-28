@@ -5,10 +5,13 @@ import cn.wyslkl.server.domain.CourseExample;
 import cn.wyslkl.server.dto.CourseDto;
 import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.mapper.CourseMapper;
+import cn.wyslkl.server.mapper.my.MyCourseMapper;
 import cn.wyslkl.server.util.CopyUtil;
 import cn.wyslkl.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,9 +21,13 @@ import java.util.Date;
 
 @Service
 public class CourseService {
+    private static final Logger LOG = LoggerFactory.getLogger(CourseService.class);
 
     @Resource
     private CourseMapper courseMapper;
+
+    @Resource
+    private MyCourseMapper myCourseMapper;
 
     /**
      * 列表查询
@@ -72,5 +79,15 @@ public class CourseService {
      */
     public void delete(String id) {
         courseMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 更新课程时长
+     * @param courseId
+     * @return
+     */
+    public void updateTime(String courseId) {
+        LOG.info("更新课程时长：{}", courseId);
+        myCourseMapper.updateTime(courseId);
     }
 }
