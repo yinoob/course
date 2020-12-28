@@ -72,3 +72,17 @@ values ('00001', '测试课程', '这是一门测试课程', 7200, 19.9, '', 0, 
 
 update course c set time =(select sum(time) from section where course_id= 'rb6tR7nY')
 where c.id='rb6tR7nY';
+
+#分类表
+drop table if exists category;
+create table category(
+    id char(8) not null default '' comment 'id',
+    parent char(8) not null default '' comment '父id',
+    name varchar(50) not null comment '名称',
+    sort int comment '顺序',
+    primary key (id)
+)engine=innodb default charset=utf8mb4 comment='分类';
+insert into category (id, parent, name, sort) values (000100,000000, '前端技术', 100);
+insert into category (id, parent, name, sort) values (000101,000100, 'html\css', 101);
+insert into category (id, parent, name, sort) values (000102,000100, 'javascript', 102);
+insert into category (id, parent, name, sort) values (000103,000100, 'vue.js', 103);
