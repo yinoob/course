@@ -86,3 +86,11 @@ insert into category (id, parent, name, sort) values (000100,000000, '前端技�
 insert into category (id, parent, name, sort) values (000101,000100, 'html\css', 101);
 insert into category (id, parent, name, sort) values (000102,000100, 'javascript', 102);
 insert into category (id, parent, name, sort) values (000103,000100, 'vue.js', 103);
+
+
+drop table if exists course_content;
+create table course_content(
+    id char(8) not null default '' comment '课程id',
+    content mediumtext not null comment '课程内容',
+    primary key (id)
+)engine=innodb default charset=utf8mb4 comment='课程内容';
