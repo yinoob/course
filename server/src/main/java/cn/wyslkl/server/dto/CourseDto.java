@@ -80,24 +80,8 @@ public class CourseDto {
 
     private String teacherId;
 
-    private TeacherDto teacher;
-
-    public String getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
-    }
 
 
-    public TeacherDto getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(TeacherDto teacher) {
-        this.teacher = teacher;
-    }
 
 
     public String getId() {
@@ -204,6 +188,17 @@ public class CourseDto {
         this.updatedAt = updatedAt;
     }
 
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
+
+
+
 
     @Override
     public String toString() {
@@ -224,7 +219,6 @@ public class CourseDto {
         sb.append(", sort=").append(sort);
         sb.append(", createdAt=").append(createdAt);
         sb.append(", updatedAt=").append(updatedAt);
-        sb.append(", teacher=").append(teacher);
         sb.append(", teacherId=").append(teacherId);
         sb.append("]");
         return sb.toString();

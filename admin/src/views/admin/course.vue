@@ -181,13 +181,17 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">收费</label>
                 <div class="col-sm-10">
-                  <input v-model="course.charge" class="form-control">
+                  <select v-model="course.charge" class="form-control">
+                    <option v-for="o in COURSE_CHARGE" v-bind:value="o.key">{{o.value}}</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">状态</label>
                 <div class="col-sm-10">
-                  <input v-model="course.status" class="form-control">
+                  <select v-model="course.status" class="form-control">
+                    <option v-for="o in COURSE_STATUS" v-bind:value="o.key">{{o.value}}</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
@@ -229,6 +233,7 @@
         COURSE_LEVEL: COURSE_LEVEL,
         COURSE_CHARGE: COURSE_CHARGE,
         COURSE_STATUS: COURSE_STATUS,
+        teacher:{},
         teachers: [],
       }
     },
@@ -347,7 +352,7 @@
       allTeacher() {
         let _this = this;
         //Loading.show();
-        axios.post(process.env.VUE_APP_SERVER + '/business/admin/teacher/all').then((response)=>{
+        axios.post(process.env.VUE_APP_SERVER + '/business/admin/teacher/all', qs.stringify(_this.teacher)).then((response)=>{
           //Loading.hide();
           let resp = response.data;
           _this.teachers = resp.content;
