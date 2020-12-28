@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.mybatis.spring.annotation.MapperScan;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @ComponentScan("cn.wyslkl")
@@ -64,6 +65,16 @@ public class TeacherController {
     public ResponseDto delete( String id) {
         ResponseDto responseDto = new ResponseDto();
         teacherService.delete(id);
+        return responseDto;
+    }
+    /**
+     * 列表查询
+     */
+    @PostMapping("/all")
+    public ResponseDto all() {
+        ResponseDto responseDto = new ResponseDto();
+        List<TeacherDto> teacherDtoList = teacherService.all();
+        responseDto.setContent(teacherDtoList);
         return responseDto;
     }
 }

@@ -56,8 +56,9 @@
         <table tableName="section" domainObjectName="Section"/>
             <table tableName="course" domainObjectName="Course"/>
             <table tableName="category" domainObjectName="Category"/>
-            <table tableName="course_content" domainObjectName="CourseContent"/>-->
-            <table tableName="teacher" domainObjectName="Teacher"/>
+            <table tableName="course_content" domainObjectName="CourseContent"/>
+            <table tableName="teacher" domainObjectName="Teacher"/>-->
+            <table tableName="course" domainObjectName="Course"/>
 
     </context>
 </generatorConfiguration>

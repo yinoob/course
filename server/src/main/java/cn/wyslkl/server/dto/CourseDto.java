@@ -2,6 +2,8 @@ package cn.wyslkl.server.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -75,6 +77,28 @@ public class CourseDto {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
+    private String teacherId;
+
+    private TeacherDto teacher;
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
+
+    public TeacherDto getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(TeacherDto teacher) {
+        this.teacher = teacher;
+    }
+
 
     public String getId() {
         return id;
@@ -200,6 +224,8 @@ public class CourseDto {
         sb.append(", sort=").append(sort);
         sb.append(", createdAt=").append(createdAt);
         sb.append(", updatedAt=").append(updatedAt);
+        sb.append(", teacher=").append(teacher);
+        sb.append(", teacherId=").append(teacherId);
         sb.append("]");
         return sb.toString();
     }

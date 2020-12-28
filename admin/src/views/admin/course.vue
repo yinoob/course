@@ -35,10 +35,24 @@
             <h3 class="search-title">
               <a href="#" class="blue">{{course.name}}</a>
             </h3>
+
+            <div v-for="teacher in teachers.filter(t=>{return t.id===course.teacherId})" class="profile-activity clearfix">
+              <div>
+                <img v-show="!teacher.image" class="pull-left" src="/ace/assets/images/avatars/avatar5.png">
+                <img v-show="teacher.image" class="pull-left" v-bind:src="teacher.image">
+                <a class="user" href="#"> {{teacher.name}} </a>
+                <br>
+                {{teacher.position}}
+              </div>
+            </div>
+
+            <p>
+              <span class="blue bolder bigger-150">{{course.price}}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
+            </p>
             <p>{{course.summary}}</p>
             <p>
               <span class="badge badge-info">{{course.id}}</span>
-              <span class="badge badge-info">排序：{{course.sort}}</span>
+              <!--<span class="badge badge-info">排序：{{course.sort}}</span>-->
               <span class="badge badge-info">{{course.time | formatSecond}}</span>
             </p>
             <p>
@@ -125,6 +139,14 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label">讲师</label>
+                <div class="col-sm-10">
+                  <select v-model="course.teacherId" class="form-control">
+                    <option v-for="o in teachers" v-bind:value="o.id">{{o.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label">概述</label>
                 <div class="col-sm-10">
                   <input v-model="course.summary" class="form-control">
@@ -207,11 +229,13 @@
         COURSE_LEVEL: COURSE_LEVEL,
         COURSE_CHARGE: COURSE_CHARGE,
         COURSE_STATUS: COURSE_STATUS,
+        teachers: [],
       }
     },
     mounted: function() {
       let _this = this;
       _this.$refs.pagination.size = 5;
+      _this.allTeacher();
       _this.list(1);
       // sidebar激活样式方法一
       // this.$parent.activeSidebar("business-course-sidebar");
@@ -318,6 +342,16 @@
         let _this = this;
         SessionStorage.set(SESSION_KEY_COURSE, course);
         _this.$router.push("/business/content");
+      },
+
+      allTeacher() {
+        let _this = this;
+        //Loading.show();
+        axios.post(process.env.VUE_APP_SERVER + '/business/admin/teacher/all').then((response)=>{
+          //Loading.hide();
+          let resp = response.data;
+          _this.teachers = resp.content;
+        })
       },
     }
   }
