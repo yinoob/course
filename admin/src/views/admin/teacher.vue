@@ -69,7 +69,7 @@
             <h4 class="modal-title">表单</h4>
           </div>
           <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" ><!--enctype="multipart/form-data"-->
               <div class="form-group">
                 <label class="col-sm-2 control-label">姓名</label>
                 <div class="col-sm-10">
@@ -84,9 +84,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">头像</label>
-                <div class="col-sm-10">
-                  <input v-model="teacher.image" class="form-control">
-                </div>
+                <input type="file" v-on:change="uploadImage()" id="file-upload-input">
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">职位</label>
@@ -226,6 +224,17 @@
               Toast.success("删除成功！");
             }
           })
+        });
+      },
+
+      uploadImage() {
+        let _this = this;
+        let formData = new window.FormData();
+        formData.append('file', document.querySelector('#file-upload-input').files[0]);
+        axios.post(process.env.VUE_APP_SERVER + '/file/admin/teacher/upload', formData,
+                //{headers: {'Content-Type': 'multipart/form-data'}}
+                ).then((response) => {
+          let resp = response.data;
         });
       }
     }
