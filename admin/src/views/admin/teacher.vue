@@ -236,17 +236,11 @@
       uploadImage() {
         let _this = this;
         let formData = new window.FormData();
+
         formData.append('file', document.querySelector('#file-upload-input').files[0]);
 
-        axios.post(process.env.VUE_APP_SERVER + '/file/admin/teacher/upload',
-               formData
-               //{transformRequest: [
-               //    (formData) => {
-               //      return  Qs.stringify({ //此处的data类型判断为重要点，
-               //        ...formData
-               //      });
-               //    }
-               //  ]}
+        axios.post(process.env.VUE_APP_SERVER + '/file/admin/teacher/upload', formData
+
                 //qs.stringify({formData: formData})
                 //{headers: {'Content-Type': 'multipart/form-data'}}
                 ).then((response) => {
