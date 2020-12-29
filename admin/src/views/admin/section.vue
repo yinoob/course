@@ -98,7 +98,7 @@
                         v-bind:after-upload="afterUpload"></file>
                   <div v-show="section.video" class="row">
                     <div class="col-md-9">
-                    <video v-bind:src="section.video"  controls="controls"><!--id="video" class="hidden"-->
+                    <video v-bind:src="section.video"  controls="controls" id="video"><!--id="video" class="hidden"-->
                     </video>
                     </div>
                   </div>
@@ -107,7 +107,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">时长</label>
                 <div class="col-sm-10">
-                  <input v-model="section.time" class="form-control">
+                  <input v-model="section.time" class="form-control" type="text" ref="dur" name='0'>
                 </div>
               </div>
               <div class="form-group">
@@ -133,7 +133,6 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <modal-player ref="modalPlayer"></modal-player>
   </div>
 </template>
 
@@ -219,6 +218,7 @@
       save() {
         let _this = this;
 
+        //_this.section.video = "";
         // 保存校验
         if (1 != 1
           || !Validator.require(_this.section.title, "标题")
@@ -264,7 +264,26 @@
       afterUpload(resp) {
         let _this = this;
         let video = resp.content;
+        console.log("video",resp.content);
         _this.section.video = video;
+        _this.getTime();
+      },
+
+      /**
+       * 获取时长
+       */
+      getTime(resp) {
+        let _this = this;
+        setTimeout(function () {
+         // let ele = document.getElementById('video');
+         // console.log("视频时长:",ele.duration);
+         // _this.section.time = parseInt(ele.duration, 10);
+          let audioElement = document.getElementById('video');
+          audioElement.addEventListener("loadedmetadata", function (_event) {
+            console.log("视频时长:",audioElement.duration);
+            _this.section.time = parseInt(audioElement.duration, 10);
+          });
+        }, 1000);
       },
     }
   }
