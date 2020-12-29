@@ -42,6 +42,7 @@ public class UploadController {
         file.transferTo(dest);
         LOG.info(dest.getAbsolutePath());
         ResponseDto responseDto=new ResponseDto();
+        responseDto.setContent("http://localhost:8999/file/f/resources/"+key+"-"+fileName);
         return responseDto;
     }
 }

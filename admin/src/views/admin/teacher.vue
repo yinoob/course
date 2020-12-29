@@ -85,6 +85,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">头像</label>
                 <input type="file" v-on:change="uploadImage()" id="file-upload-input">
+                 <img v-bind:src="teacher.image" class="img-responsive">
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">职位</label>
@@ -231,10 +232,23 @@
         let _this = this;
         let formData = new window.FormData();
         formData.append('file', document.querySelector('#file-upload-input').files[0]);
-        axios.post(process.env.VUE_APP_SERVER + '/file/admin/teacher/upload', formData,
+
+        axios.post(process.env.VUE_APP_SERVER + '/file/admin/teacher/upload',
+               formData
+               //{transformRequest: [
+               //    (formData) => {
+               //      return  Qs.stringify({ //此处的data类型判断为重要点，
+               //        ...formData
+               //      });
+               //    }
+               //  ]}
+                //qs.stringify({formData: formData})
                 //{headers: {'Content-Type': 'multipart/form-data'}}
                 ).then((response) => {
           let resp = response.data;
+          let image = resp.content;
+          console.log("头像地址:",image);
+          _this.teacher.image = image;
         });
       }
     }
