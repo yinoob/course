@@ -91,7 +91,17 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">视频</label>
                 <div class="col-sm-10">
-                  <input v-model="section.video" class="form-control">
+                  <file v-bind:input-id="'video-upload'"
+                        v-bind:text="'上传视频'"
+                        v-bind:suffixs="['mp4']"
+                        v-bind:used="FILE_USE.COURSE.key"
+                        v-bind:after-upload="afterUpload"></file>
+                  <div v-show="section.video" class="row">
+                    <div class="col-md-9">
+                    <video v-bind:src="section.video"  controls="controls"><!--id="video" class="hidden"-->
+                    </video>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -123,6 +133,7 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <modal-player ref="modalPlayer"></modal-player>
   </div>
 </template>
 
@@ -130,9 +141,10 @@
   import Pagination from "../../components/pagination";
   import axios from 'axios'
   import qs from 'qs'
+  import File from "../../components/file"
 
   export default {
-    components: {Pagination},
+    components: {Pagination, File},
     name: "business-section",
     data: function() {
       return {
@@ -143,6 +155,7 @@
         //FILE_USE: FILE_USE,
         course: {},
         chapter: {},
+        FILE_USE: FILE_USE,
       }
     },
     mounted: function() {
@@ -247,7 +260,20 @@
             }
           })
         });
-      }
+      },
+      afterUpload(resp) {
+        let _this = this;
+        let video = resp.content;
+        _this.section.video = video;
+      },
     }
   }
 </script>
+
+<style scoped>
+  video {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+</style>

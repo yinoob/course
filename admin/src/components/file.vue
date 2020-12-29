@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     name: 'file',
     props: {
@@ -21,7 +22,7 @@
       suffixs: {
         default: []
       },
-      use: {
+      used: {
         default: ""
       },
       afterUpload: {
@@ -58,10 +59,10 @@
 
         // key："file"必须和后端controller参数名一致
         formData.append('file', file);
-        formData.append('use', _this.use);
-        Loading.show();
-        _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/admin/oss-simple', formData).then((response)=>{
-          Loading.hide();
+        formData.append('used', _this.used);
+        //Loading.show();
+        axios.post(process.env.VUE_APP_SERVER + '/file/admin/file/upload', formData).then((response)=>{
+          //Loading.hide();
           let resp = response.data;
           console.log("上传文件成功：", resp);
           _this.afterUpload(resp);

@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @ComponentScan("cn.wyslkl")
 @MapperScan("cn.wyslkl.server.mapper")
-@RequestMapping(value={"/admin/teacher"})//,consumes="multipart/form-data"
+@RequestMapping(value={"/admin/file"})//,consumes="multipart/form-data"
 public class UploadController {
 
     private static final Logger LOG= LoggerFactory.getLogger(UploadController.class);

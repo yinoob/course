@@ -90,7 +90,6 @@
                  <img v-bind:src="teacher.image" class="img-responsive">
                   </div>
                 </div>
-
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">职位</label>
@@ -239,7 +238,7 @@
 
         formData.append('file', document.querySelector('#file-upload-input').files[0]);
 
-        axios.post(process.env.VUE_APP_SERVER + '/file/admin/teacher/upload', formData
+        axios.post(process.env.VUE_APP_SERVER + '/file/admin/file/upload', formData
 
                 //qs.stringify({formData: formData})
                 //{headers: {'Content-Type': 'multipart/form-data'}}
