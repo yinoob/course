@@ -56,8 +56,10 @@ public class UploadController {
         String suffix=fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
         String path="resources/" +key + "." +suffix;
         String fullPath=FILE_PATH + path;
+
         File dest=new File(fullPath);
         file.transferTo(dest);
+
         LOG.info(dest.getAbsolutePath());
 
         LOG.info("保存文件记录开始");
