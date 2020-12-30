@@ -634,6 +634,256 @@ public class FileExample {
             addCriterion("updated_at not between", value1, value2, "updatedAt");
             return (Criteria) this;
         }
+
+        public Criteria andShardIndexIsNull() {
+            addCriterion("shard_index is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexIsNotNull() {
+            addCriterion("shard_index is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexEqualTo(Integer value) {
+            addCriterion("shard_index =", value, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexNotEqualTo(Integer value) {
+            addCriterion("shard_index <>", value, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexGreaterThan(Integer value) {
+            addCriterion("shard_index >", value, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shard_index >=", value, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexLessThan(Integer value) {
+            addCriterion("shard_index <", value, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexLessThanOrEqualTo(Integer value) {
+            addCriterion("shard_index <=", value, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexIn(List<Integer> values) {
+            addCriterion("shard_index in", values, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexNotIn(List<Integer> values) {
+            addCriterion("shard_index not in", values, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexBetween(Integer value1, Integer value2) {
+            addCriterion("shard_index between", value1, value2, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardIndexNotBetween(Integer value1, Integer value2) {
+            addCriterion("shard_index not between", value1, value2, "shardIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeIsNull() {
+            addCriterion("shard_size is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeIsNotNull() {
+            addCriterion("shard_size is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeEqualTo(Integer value) {
+            addCriterion("shard_size =", value, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeNotEqualTo(Integer value) {
+            addCriterion("shard_size <>", value, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeGreaterThan(Integer value) {
+            addCriterion("shard_size >", value, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shard_size >=", value, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeLessThan(Integer value) {
+            addCriterion("shard_size <", value, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeLessThanOrEqualTo(Integer value) {
+            addCriterion("shard_size <=", value, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeIn(List<Integer> values) {
+            addCriterion("shard_size in", values, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeNotIn(List<Integer> values) {
+            addCriterion("shard_size not in", values, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeBetween(Integer value1, Integer value2) {
+            addCriterion("shard_size between", value1, value2, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardSizeNotBetween(Integer value1, Integer value2) {
+            addCriterion("shard_size not between", value1, value2, "shardSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalIsNull() {
+            addCriterion("shard_total is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalIsNotNull() {
+            addCriterion("shard_total is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalEqualTo(Integer value) {
+            addCriterion("shard_total =", value, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalNotEqualTo(Integer value) {
+            addCriterion("shard_total <>", value, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalGreaterThan(Integer value) {
+            addCriterion("shard_total >", value, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shard_total >=", value, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalLessThan(Integer value) {
+            addCriterion("shard_total <", value, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalLessThanOrEqualTo(Integer value) {
+            addCriterion("shard_total <=", value, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalIn(List<Integer> values) {
+            addCriterion("shard_total in", values, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalNotIn(List<Integer> values) {
+            addCriterion("shard_total not in", values, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalBetween(Integer value1, Integer value2) {
+            addCriterion("shard_total between", value1, value2, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andShardTotalNotBetween(Integer value1, Integer value2) {
+            addCriterion("shard_total not between", value1, value2, "shardTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdIsNull() {
+            addCriterion("key_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdIsNotNull() {
+            addCriterion("key_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdEqualTo(String value) {
+            addCriterion("key_id =", value, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdNotEqualTo(String value) {
+            addCriterion("key_id <>", value, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdGreaterThan(String value) {
+            addCriterion("key_id >", value, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdGreaterThanOrEqualTo(String value) {
+            addCriterion("key_id >=", value, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdLessThan(String value) {
+            addCriterion("key_id <", value, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdLessThanOrEqualTo(String value) {
+            addCriterion("key_id <=", value, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdLike(String value) {
+            addCriterion("key_id like", value, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdNotLike(String value) {
+            addCriterion("key_id not like", value, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdIn(List<String> values) {
+            addCriterion("key_id in", values, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdNotIn(List<String> values) {
+            addCriterion("key_id not in", values, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdBetween(String value1, String value2) {
+            addCriterion("key_id between", value1, value2, "keyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andKeyIdNotBetween(String value1, String value2) {
+            addCriterion("key_id not between", value1, value2, "keyId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
