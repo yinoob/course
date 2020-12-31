@@ -28,7 +28,7 @@
         default: ""
       },
       shardSize: {
-        default: 1024* 1024
+        default: 50* 1024
       },
       url: {
         default: "oss-append"
@@ -176,7 +176,7 @@
           param.shard = base64;
 
           //_this.$ajax
-          axios.post(process.env.VUE_APP_SERVER + '/file/admin/file/upload' ,qs.stringify(param)).then((response) => {
+          axios.post(process.env.VUE_APP_SERVER + '/file/admin/file/oss-append' ,qs.stringify(param)).then((response) => {
             let resp = response.data;
             console.log("上传文件成功：", resp);
             Progress.show(parseInt(shardIndex * 100 / shardTotal));
