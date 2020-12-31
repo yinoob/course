@@ -167,11 +167,11 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">封面</label>
                 <div class="col-sm-10">
-                  <file v-bind:id="'image-upload'"
+                  <big-file v-bind:id="'image-upload'"
                         v-bind:text="'上传封面'"
                         v-bind:suffixs="['jpg','jpeg','png']"
                         v-bind:used="FILE_USE.COURSE.key"
-                        v-bind:after-upload="afterUpload"></file>
+                        v-bind:after-upload="afterUpload"></big-file>
                   <div v-show="course.image" class="row">
                     <div class="col-md-6">
                       <img v-bind:src="course.image" class="img-responsive">
@@ -232,9 +232,10 @@
   import axios from 'axios'
   import File from "../../components/file"
   import qs from 'qs'
+  import BigFile from "../../components/big-file";
 
   export default {
-    components: {Pagination, File},
+    components: {BigFile, Pagination, File},
     name: "business-course",
     data: function() {
       return {
@@ -372,7 +373,7 @@
       },
       afterUpload(resp) {
         let _this = this;
-        let image = resp.content;
+        let image = resp.content.path;
         _this.course.image = image;
       },
     }
