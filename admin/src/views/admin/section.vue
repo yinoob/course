@@ -263,7 +263,7 @@
       },
       afterUpload(resp) {
         let _this = this;
-        let video = resp.content;
+        let video = resp.content.path;
         console.log("video",resp.content);
         _this.section.video = video;
         _this.getTime();

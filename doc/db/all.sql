@@ -128,3 +128,5 @@ alter table file add column (shard_size int comment '分片大小|B');
 alter table file add column (shard_total int comment '分片总数');
 alter table file add column (key_id varchar(32) comment '文件标识');
 alter table file add unique key key_unique (key_id);
+
+alter table file modify column size bigint;

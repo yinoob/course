@@ -6,7 +6,7 @@
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="suffix" jdbcType="VARCHAR" property="suffix" />
-    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="size" jdbcType="BIGINT" property="size" />
     <result column="used" jdbcType="CHAR" property="used" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
@@ -113,7 +113,7 @@
       updated_at, shard_index, shard_size, 
       shard_total, key_id)
     values (#{id,jdbcType=CHAR}, #{path,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{suffix,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, #{used,jdbcType=CHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{suffix,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, #{used,jdbcType=CHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
       #{updatedAt,jdbcType=TIMESTAMP}, #{shardIndex,jdbcType=INTEGER}, #{shardSize,jdbcType=INTEGER}, 
       #{shardTotal,jdbcType=INTEGER}, #{keyId,jdbcType=VARCHAR})
   </insert>
@@ -171,7 +171,7 @@
         #{suffix,jdbcType=VARCHAR},
       </if>
       <if test="size != null">
-        #{size,jdbcType=INTEGER},
+        #{size,jdbcType=BIGINT},
       </if>
       <if test="used != null">
         #{used,jdbcType=CHAR},
@@ -218,7 +218,7 @@
         suffix = #{record.suffix,jdbcType=VARCHAR},
       </if>
       <if test="record.size != null">
-        `size` = #{record.size,jdbcType=INTEGER},
+        `size` = #{record.size,jdbcType=BIGINT},
       </if>
       <if test="record.used != null">
         used = #{record.used,jdbcType=CHAR},
@@ -252,7 +252,7 @@
       `path` = #{record.path,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
       suffix = #{record.suffix,jdbcType=VARCHAR},
-      `size` = #{record.size,jdbcType=INTEGER},
+      `size` = #{record.size,jdbcType=BIGINT},
       used = #{record.used,jdbcType=CHAR},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
@@ -277,7 +277,7 @@
         suffix = #{suffix,jdbcType=VARCHAR},
       </if>
       <if test="size != null">
-        `size` = #{size,jdbcType=INTEGER},
+        `size` = #{size,jdbcType=BIGINT},
       </if>
       <if test="used != null">
         used = #{used,jdbcType=CHAR},
@@ -308,7 +308,7 @@
     set `path` = #{path,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
       suffix = #{suffix,jdbcType=VARCHAR},
-      `size` = #{size,jdbcType=INTEGER},
+      `size` = #{size,jdbcType=BIGINT},
       used = #{used,jdbcType=CHAR},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},

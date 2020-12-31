@@ -10,6 +10,7 @@ import cn.wyslkl.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -40,10 +41,12 @@ public class FileService {
      */
     public void save(FileDto fileDto) {
         File file = CopyUtil.copy(fileDto, File.class);
-        if (StringUtils.isEmpty(fileDto.getId())) {
+        File fileDb = selectByKeyId(fileDto.getKeyId());
+        if (fileDb == null) {
             this.insert(file);
         } else {
-            this.update(file);
+            fileDb.setShardIndex(fileDto.getShardIndex());
+            this.update(fileDb);
         }
     }
 
@@ -71,5 +74,23 @@ public class FileService {
      */
     public void delete(String id) {
         fileMapper.deleteByPrimaryKey(id);
+    }
+
+    public File selectByKeyId(String keyId) {
+        FileExample example = new FileExample();
+        example.createCriteria().andKeyIdEqualTo(keyId);
+        List<File> fileList = fileMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(fileList)) {
+            return null;
+        } else {
+            return fileList.get(0);
+        }
+    }
+
+    /**
+     * 根据文件标识查询数据库记录
+     */
+    public FileDto findByKeyId(String key) {
+        return CopyUtil.copy(selectByKeyId(key), FileDto.class);
     }
 }

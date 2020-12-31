@@ -11,7 +11,7 @@ public class File {
 
     private String suffix;
 
-    private Integer size;
+    private Long size;
 
     private String used;
 
@@ -59,11 +59,11 @@ public class File {
         this.suffix = suffix;
     }
 
-    public Integer getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 

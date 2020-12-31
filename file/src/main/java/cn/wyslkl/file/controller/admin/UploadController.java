@@ -1,23 +1,25 @@
 package cn.wyslkl.file.controller.admin;
 
 
+import cn.wyslkl.file.util.Base64ToMultipartFile;
 import cn.wyslkl.server.domain.Test;
 import cn.wyslkl.server.dto.ResponseDto;
 import cn.wyslkl.server.dto.FileDto;
 import cn.wyslkl.server.enums.FileUseEnum;
 import cn.wyslkl.server.service.FileService;
 import cn.wyslkl.server.service.TestService;
-import cn.wyslkl.server.util.Base64ToMultipartFile;
+
 import cn.wyslkl.server.util.UuidUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -25,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -46,36 +49,98 @@ public class UploadController {
     @Resource
     private FileService fileService;
 
-    @RequestMapping("/upload")
-    public ResponseDto upload(@RequestParam MultipartFile file) throws IOException {
-        LOG.info("上传文件开始:{}",file);
-        LOG.info(file.getOriginalFilename());
-        LOG.info(String.valueOf(file.getSize()));
+    @PostMapping(value={"/upload"})
+    public  ResponseDto upload(//@RequestBody String shard,
+                              //           String used,
+                              //String name,
+                              //String suffix,
+                              //String keyId,
+                              //Integer size,
+                              //Integer shardIndex,
+                              //Integer shardSize,
+                              //Integer shardTotal
+                                FileDto fileDto//HashMap<String,String> jsonParam
+                              ) throws Exception {//@RequestParam
+        LOG.info("上传文件开始");
+     // LOG.info("shard",jsonParam.get("shard"));
+     // LOG.info("shardIndex",jsonParam.get("shardIndex"));
+     // LOG.info("size",jsonParam.get("size"));
 
-        //保存文件到本地
-        String key =UuidUtil.getShortUuid();
-        String fileName=file.getOriginalFilename();
-        String suffix=fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
-        String path="resources/" +key + "." +suffix;
-        String fullPath=FILE_PATH + path;
+     // String shard=jsonParam.get("shard");
+     // int shardIndex=Integer.parseInt(jsonParam.get("shardIndex"));
+     // int shardSize=Integer.parseInt(jsonParam.get("shardSize"));
+     // int shardTotal=Integer.parseInt(jsonParam.get("shardTotal"));
+     // String used=jsonParam.get("used");
+     // String name=jsonParam.get("name");
+     // String suffix=jsonParam.get("suffix");
+     // long size=Long.parseLong(jsonParam.get("size"));
+     // String keyId=jsonParam.get("keyId");
 
-        File dest=new File(fullPath);
-        file.transferTo(dest);
 
+
+
+
+        String used = fileDto.getUsed();
+        String keyId = fileDto.getKeyId();
+        String suffix = fileDto.getSuffix();
+        //FileDto fileDto=new FileDto();
+    //  fileDto.setShard(shard);
+    //  fileDto.setUsed(used);
+    //  fileDto.setName(name);
+    //  fileDto.setSuffix(suffix);
+    //  fileDto.setKeyId(keyId);
+    //  fileDto.setSize(size);
+    //  fileDto.setShardIndex(shardIndex);
+    //  fileDto.setShardSize(shardSize);
+    //  fileDto.setShardTotal(shardTotal);
+        LOG.info(fileDto.toString());
+        LOG.info("used为",used);
+        LOG.info("keyId为",keyId);
+        LOG.info("suffix为",suffix);
+        String shardBase64 = fileDto.getShard();
+        MultipartFile shardfile = Base64ToMultipartFile.base64ToMultipart(shardBase64);
+
+        // 保存文件到本地
+        FileUseEnum useEnum = FileUseEnum.getByCode(used);
+
+
+        //如果文件夹不存在则创建
+        String dir = useEnum.name().toLowerCase();
+        File fullDir = new File(FILE_PATH + dir);
+        if (!fullDir.exists()) {
+            fullDir.mkdir();
+        }
+
+//        String path = dir + File.separator + key + "." + suffix + "." + fileDto.getShardIndex();
+        String path = new StringBuffer(dir)
+                .append(File.separator)
+                .append(keyId)
+                .append(".")
+                .append(suffix)
+                .toString(); // course\6sfSqfOwzmik4A4icMYuUe.mp4
+        String localPath = new StringBuffer(path)
+                .append(".")
+                .append(fileDto.getShardIndex())
+                .toString(); // course\6sfSqfOwzmik4A4icMYuUe.mp4.1
+        String fullPath = FILE_PATH + localPath;
+        File dest = new File(fullPath);
+        shardfile.transferTo(dest);
         LOG.info(dest.getAbsolutePath());
 
         LOG.info("保存文件记录开始");
-        FileDto fileDto=new FileDto();
         fileDto.setPath(path);
-        fileDto.setName(fileName);
-        fileDto.setSize(Math.toIntExact(file.getSize()));
-        fileDto.setSuffix(suffix);
-        fileDto.setUsed("");
         fileService.save(fileDto);
-        ResponseDto responseDto=new ResponseDto();
-        responseDto.setContent(FILE_DOMAIN + path);
+
+        ResponseDto responseDto = new ResponseDto();
+        fileDto.setPath(FILE_DOMAIN + path);
+        responseDto.setContent(fileDto);
+
+        if (fileDto.getShardIndex().equals(fileDto.getShardTotal())) {
+            this.merge(fileDto);
+        }
         return responseDto;
     }
+
 
     public void merge(FileDto fileDto) throws Exception {
         LOG.info("合并分片开始");
@@ -124,6 +189,33 @@ public class UploadController {
         }
         LOG.info("删除分片结束");
     }
+
+
+    @GetMapping("/check/{keyId}")
+    public ResponseDto check(@PathVariable String keyId) throws Exception {
+        LOG.info("检查上传分片开始：{}", keyId);
+        ResponseDto responseDto = new ResponseDto();
+        FileDto fileDto = fileService.findByKeyId(keyId);
+        /*
+        if (fileDto != null) {
+            if (StringUtils.isEmpty(fileDto.getVod())) {
+                fileDto.setPath(OSS_DOMAIN + fileDto.getPath());
+            } else {
+                DefaultAcsClient vodClient = VodUtil.initVodClient(accessKeyId, accessKeySecret);
+                GetMezzanineInfoResponse response = VodUtil.getMezzanineInfo(vodClient, fileDto.getVod());
+                System.out.println("获取视频信息, response : " + JSON.toJSONString(response));
+                String fileUrl = response.getMezzanine().getFileURL();
+                fileDto.setPath(fileUrl);
+            }
+        }
+
+         */
+        responseDto.setContent(fileDto);
+        return responseDto;
+    }
+
+
+
        /**
         LOG.info("上传文件开始");
         String use = fileDto.getUsed();

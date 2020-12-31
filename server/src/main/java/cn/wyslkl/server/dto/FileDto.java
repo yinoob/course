@@ -29,7 +29,7 @@ public class FileDto {
     /**
      * 大小|字节B
      */
-    private Integer size;
+    private Long size;
 
     /**
      * 用途|枚举[FileUseEnum]: COURSE("C","讲师"), TEACHER("T","课程")
@@ -56,6 +56,15 @@ public class FileDto {
 
     private Integer shardTotal;
 
+    private String keyId;
+
+    /**
+     * base64
+     */
+    private String shard;
+
+    //private String vod;
+
     public Integer getShardIndex() {
         return shardIndex;
     }
@@ -80,12 +89,12 @@ public class FileDto {
         this.shardTotal = shardTotal;
     }
 
-    public String getKey() {
-        return key;
+    public String getKeyId() {
+        return keyId;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setKeyId(String keyId) {
+        this.keyId = keyId;
     }
 
     public String getShard() {
@@ -96,25 +105,16 @@ public class FileDto {
         this.shard = shard;
     }
 
+    /**
     public String getVod() {
+
         return vod;
     }
 
     public void setVod(String vod) {
         this.vod = vod;
     }
-
-    private String key;
-
-    /**
-     * base64
-     */
-    private String shard;
-
-    private String vod;
-
-
-
+    */
 
     public String getId() {
         return id;
@@ -148,11 +148,11 @@ public class FileDto {
         this.suffix = suffix;
     }
 
-    public Integer getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 
@@ -213,9 +213,9 @@ public class FileDto {
         sb.append(", shardIndex=").append(shardIndex);
         sb.append(", shardSize=").append(shardSize);
         sb.append(", shardTotal=").append(shardTotal);
-        sb.append(", key='").append(key).append('\'');
+        sb.append(", keyId='").append(keyId).append('\'');
         sb.append(", shard='").append(shard).append('\'');
-        sb.append(", vod='").append(vod).append('\'');
+       // sb.append(", vod='").append(vod).append('\'');
         sb.append('}');
         return sb.toString();
     }
