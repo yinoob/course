@@ -7,6 +7,7 @@ import cn.wyslkl.server.service.UserService;
 import cn.wyslkl.server.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.context.annotation.ComponentScan;
 import org.mybatis.spring.annotation.MapperScan;
@@ -43,6 +44,7 @@ public class UserController {
      */
     @PostMapping("/save")
     public ResponseDto save( UserDto userDto) {
+        userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
         // 保存校验
         ValidatorUtil.require(userDto.getLoginName(), "登录名");
         ValidatorUtil.length(userDto.getLoginName(), "登录名", 1, 50);

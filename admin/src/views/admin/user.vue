@@ -161,6 +161,7 @@
         }
 
         //Loading.show();
+        _this.user.password = hex_md5(_this.user.password + KEY);
         axios.post(process.env.VUE_APP_SERVER + '/system/admin/user/save', qs.stringify(_this.user)).then((response)=>{
           //Loading.hide();
           let resp = response.data;
