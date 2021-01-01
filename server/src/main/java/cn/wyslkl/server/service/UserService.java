@@ -4,12 +4,15 @@ import cn.wyslkl.server.domain.User;
 import cn.wyslkl.server.domain.UserExample;
 import cn.wyslkl.server.dto.UserDto;
 import cn.wyslkl.server.dto.PageDto;
+import cn.wyslkl.server.exception.BusinessException;
+import cn.wyslkl.server.exception.BusinessExceptionCode;
 import cn.wyslkl.server.mapper.UserMapper;
 import cn.wyslkl.server.util.CopyUtil;
 import cn.wyslkl.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -51,6 +54,10 @@ public class UserService {
      */
     private void insert(User user) {
         user.setId(UuidUtil.getShortUuid());
+        User userDb = this.selectByLoginName(user.getLoginName());
+        if (userDb != null) {
+            throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
+        }
         userMapper.insert(user);
     }
 
@@ -66,5 +73,21 @@ public class UserService {
      */
     public void delete(String id) {
         userMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 根据登录名查询用户信息
+     * @param loginName
+     * @return
+     */
+    public User selectByLoginName(String loginName) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andLoginNameEqualTo(loginName);
+        List<User> userList = userMapper.selectByExample(userExample);
+        if (CollectionUtils.isEmpty(userList)) {
+            return null;
+        } else {
+            return userList.get(0);
+        }
     }
 }
