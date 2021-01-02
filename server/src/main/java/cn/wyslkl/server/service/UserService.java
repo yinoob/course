@@ -2,27 +2,40 @@ package cn.wyslkl.server.service;
 
 import cn.wyslkl.server.domain.User;
 import cn.wyslkl.server.domain.UserExample;
+import cn.wyslkl.server.dto.LoginUserDto;
+import cn.wyslkl.server.dto.ResourceDto;
 import cn.wyslkl.server.dto.UserDto;
 import cn.wyslkl.server.dto.PageDto;
 import cn.wyslkl.server.exception.BusinessException;
 import cn.wyslkl.server.exception.BusinessExceptionCode;
 import cn.wyslkl.server.mapper.UserMapper;
+import cn.wyslkl.server.mapper.my.MyUserMapper;
 import cn.wyslkl.server.util.CopyUtil;
 import cn.wyslkl.server.util.UuidUtil;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
+
+
 
 @Service
 public class UserService {
 
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private MyUserMapper myUserMapper;
 
     /**
      * 列表查询
@@ -102,4 +115,81 @@ public class UserService {
         user.setPassword(userDto.getPassword());
         userMapper.updateByPrimaryKeySelective(user);
     }
+
+    /**
+     * 登录
+     * @param userDto
+     */
+    public LoginUserDto login(UserDto userDto) {
+        User user = selectByLoginName(userDto.getLoginName());
+        if(user==null){
+            //用户名不存在
+            LOG.info("用户名不存在,{}",userDto.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+
+        }else{
+            if(user.getPassword().equals(userDto.getPassword())){
+                //登录成功
+                return CopyUtil.copy(user,LoginUserDto.class);
+
+            }else{
+                LOG.info("密码不对，输入密码:{},数据库密码:{}",userDto.getPassword(),user.getPassword());
+                //密码不对
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+
+            }
+        }
+    }
+
+    /**
+     * 登录
+     * @param userDto
+     /
+    public LoginUserDto login(UserDto userDto) {
+        User user = selectByLoginName(userDto.getLoginName());
+        if (user == null) {
+            LOG.info("用户名不存在, {}", userDto.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        } else {
+            if (user.getPassword().equals(userDto.getPassword())) {
+                // 登录成功
+                LoginUserDto loginUserDto = CopyUtil.copy(user, LoginUserDto.class);
+                // 为登录用户读取权限
+                setAuth(loginUserDto);
+                return loginUserDto;
+            } else {
+                LOG.info("密码不对, 输入密码：{}, 数据库密码：{}", userDto.getPassword(), user.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+            }
+        }
+    }
+
+
+    /**
+     * 为登录用户读取权限
+    /
+    private void setAuth(LoginUserDto loginUserDto) {
+        List<ResourceDto> resourceDtoList = myUserMapper.findResources(loginUserDto.getId());
+        loginUserDto.setResources(resourceDtoList);
+
+        // 整理所有有权限的请求，用于接口拦截
+        HashSet<String> requestSet = new HashSet<>();
+        if (!CollectionUtils.isEmpty(resourceDtoList)) {
+            for (int i = 0, l = resourceDtoList.size(); i < l; i++) {
+                ResourceDto resourceDto = resourceDtoList.get(i);
+                String arrayString = resourceDto.getRequest();
+                List<String> requestList = JSON.parseArray(arrayString, String.class);
+                if (!CollectionUtils.isEmpty(requestList)) {
+                    requestSet.addAll(requestList);
+                }
+            }
+        }
+        LOG.info("有权限的请求：{}", requestSet);
+
+
+        loginUserDto.setRequests(requestSet);
+    }
+    */
+
+
 }

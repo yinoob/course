@@ -76,8 +76,6 @@
                 <version>3.8.0</version>
             </dependency>
 
-
-
             <!-- 图形验证码 -->
             <dependency>
                 <groupId>com.github.penggle</groupId>

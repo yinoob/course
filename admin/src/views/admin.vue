@@ -551,12 +551,10 @@
           // sidebar激活样式方法二
           console.log("---->页面跳转：", val, oldVal);
           let _this = this;
-
           if (!_this.hasResourceRouter(val.name)) {
             _this.$router.push("/login");
             return;
           }
-
           _this.$nextTick(function(){  //页面加载完成后执行
             _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
           })
@@ -577,7 +575,6 @@
       $("#" + id).siblings().removeClass("active");
       $("#" + id).siblings().find("li").removeClass("active");
       $("#" + id).addClass("active");
-
       // 如果有父菜单，父菜单的兄弟菜单去掉open active，父菜单增加open active
       let parentLi = $("#" + id).parents("li");
       if (parentLi) {
@@ -588,5 +585,3 @@
     },
   }
 </script>
-
-

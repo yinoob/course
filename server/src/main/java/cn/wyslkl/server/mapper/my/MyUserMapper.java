@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MyUserMapper {
 
-    //List<ResourceDto> findResources(@Param("userId") String userId);
+    List<ResourceDto> findResources(@Param("userId") String userId);
 
 }

@@ -143,3 +143,69 @@ create table user(
 
 insert into user (id,login_name,name,password)values
 (1000000,'test','测试','song666');
+insert into user(id,login_name,name,password)values
+(000000,'wys1234','wys1234','wys1234');
+
+#资源表
+drop table if exists resource;
+create table resource(
+    id char(6) not null default '' comment 'id',
+    name varchar(100) not null comment '名称|菜单或按钮',
+    page varchar(50) null comment '页面|路由',
+    request varchar(200) null comment '请求|接口',
+    parent char(6) comment '父id',
+    primary key (id)
+)engine=innodb default charset=utf8 comment='资源';
+
+insert into resource values ('01','系统管理',null,null,null);
+insert into resource values ('0101','用户管理','/system/user',null,'01');
+insert into resource values ('010101','保存',null,'["/system/admin/user/list","/system/admin/user/save"]','0101');
+insert into resource values ('010102','删除',null,'["/system/admin/user/delete"]','0101');
+
+insert into resource values ('010103','重置密码',null,'["/system/admin/user/save-password"]','0101');
+insert into resource values ('0102','资源管理','/system/resource',null,'01');
+insert into resource values ('010201','保存/显示',null,'["/system/admin/resource"]','0102');
+insert into resource values ('0103','角色管理','/system/role',null,'01');
+insert into resource values ('010301','角色/权限管理',null,'["/system/admin/role"]','0103');
+
+
+#角色表
+drop table if exists role;
+create table role(
+    id char(8) not null default '' comment 'id',
+    name varchar(50) not null comment '角色',
+    desc_is varchar(10) not null comment '描述',
+    primary key (id)
+) engine=innodb default charset=utf8mb4 comment='角色';
+
+insert into role values (000000,'系统管理员','管理用户，角色权限');
+insert into role values (000001,'开发','维护资源');
+insert into role values (000002,'业务管理员','负责业务管理');
+
+#角色资源关联表
+drop table if exists role_resources;
+create table role_resource(
+    id char(8) not null default '' comment 'id',
+    role_id char(8) not null comment '角色|id',
+    resource_id char(6) not null comment '资源|id',
+    primary key (id)
+)engine =innodb default charset=utf8mb4 comment='角色资源关联';
+
+insert into role_resource values (000000,000000,'01');
+insert into role_resource values (000001,000000,'0102');
+insert into role_resource values (000002,000000,'010101');
+insert into role_resource values (000003,000000,'010102');
+insert into role_resource values (000004,000000,'010103');
+
+
+#角色用户表
+drop table if exists role_user;
+create table role_user(
+    id char(8) not null default '' comment 'id',
+    role_id char(8) not null comment '角色|id',
+    user_id char(8) not null comment '用户|id',
+    primary key (id)
+)engine =innodb default  charset =utf8mb4 comment ='角色用户关联表';
+
+insert into role_user values (000000,000000,000000);
+insert into role_user values (000001,000000,'VVbrthEW');

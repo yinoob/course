@@ -58,7 +58,10 @@
             <table tableName="category" domainObjectName="Category"/>
             <table tableName="course_content" domainObjectName="CourseContent"/>
             <table tableName="teacher" domainObjectName="Teacher"/>
-            <table tableName="file" domainObjectName="File"/>-->
+            <table tableName="file" domainObjectName="File"/>
             <table tableName="user" domainObjectName="User"/>
+            <table tableName="resource" domainObjectName="Resource"/>
+            <table tableName="role_resource" domainObjectName="RoleResource"/>-->
+            <table tableName="role_user" domainObjectName="RoleUser"/>
     </context>
 </generatorConfiguration>

@@ -21,6 +21,9 @@ Vue.prototype.$ajax=axios
 
 Vue.config.productionTip = false
 
+// 解决每次ajax请求，对应的sessionId不一致的问题
+axios.defaults.withCredentials = true;
+
 /**
  * axios拦截器
 
