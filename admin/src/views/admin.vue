@@ -352,7 +352,7 @@
           <li class="" id="welcome-sidebar">
             <router-link to="/welcome">
               <i class="menu-icon fa fa-tachometer"></i>
-              <span class="menu-text"> 欢迎 </span>
+              <span class="menu-text"> 欢迎 :{{loginUser.name}}</span>
             </router-link>
 
             <b class="arrow"></b>
@@ -541,9 +541,17 @@
 <script>
   export default {
     name: "admin",
+    data: function () {
+      return {
+       loginUser: {},
+      }
+    },
     mounted: function() {
+      let _this=this;
       $("body").removeClass("login-layout light-login");
       $("body").attr("class","noskin");
+
+      _this.loginUser=SessionStorage.get("USER");
     },
     watch: {
       $route: {

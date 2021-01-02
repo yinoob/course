@@ -101,12 +101,14 @@
 
       login() {
         let _this = this;
+
         _this.user.password=hex_md5(_this.user.password+KEY);
         axios.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', qs.stringify(_this.user)).then((response) => {
           //Loading.hide();
           let resp = response.data;
           if (resp.success) {
             console.log(resp.content);
+            SessionStorage.set("USER",resp.content);
             _this.$router.push("/welcome")
           } else {
             Toast.warning(resp.message)
