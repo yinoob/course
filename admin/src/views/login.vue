@@ -41,7 +41,7 @@
 
                         <div class="clearfix">
                           <label class="inline">
-                            <input type="checkbox" class="ace" />
+                            <input v-model="remember" type="checkbox" class="ace" />
                             <span class="lbl"> 记住我</span>
                           </label>
 
@@ -91,24 +91,41 @@
       return {
         user: {},
         users: [],
+        remember: true
       }
     },
     mounted: function () {
-      $("body").removeClass("noskin");
+      let _this=this;
+      $("body").removeClass("no-skin");
       $("body").attr("class", "login-layout light-login");
+
+      let rememberUser=LocalStorage.get(LOCAL_KEY_REMEMBER_USER);
+      if(rememberUser){
+        _this.user=rememberUser;
+      }
     },
     methods: {
 
       login() {
         let _this = this;
-
+        let passwordShow=_this.user.password;
         _this.user.password=hex_md5(_this.user.password+KEY);
         axios.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', qs.stringify(_this.user)).then((response) => {
           //Loading.hide();
           let resp = response.data;
           if (resp.success) {
-            console.log(resp.content);
-            SessionStorage.set("USER",resp.content);
+            console.log("登录成功",resp.content);
+            let loginUser=resp.content;
+            Tool.setLoginUser(resp.content);
+            if(_this.remember){
+              LocalStorage.set(LOCAL_KEY_REMEMBER_USER,{
+                loginName: loginUser.loginName,
+                password: passwordShow
+              });
+            }else{
+              LocalStorage.set(LOCAL_KEY_REMEMBER_USER,null);
+            }
+
             _this.$router.push("/welcome")
           } else {
             Toast.warning(resp.message)
