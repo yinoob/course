@@ -3,9 +3,8 @@ package cn.wyslkl.server.service;
 import cn.wyslkl.server.domain.Course;
 import cn.wyslkl.server.domain.CourseContent;
 import cn.wyslkl.server.domain.CourseExample;
-import cn.wyslkl.server.dto.CourseContentDto;
-import cn.wyslkl.server.dto.CourseDto;
-import cn.wyslkl.server.dto.PageDto;
+import cn.wyslkl.server.dto.*;
+import cn.wyslkl.server.enums.CourseStatusEnum;
 import cn.wyslkl.server.mapper.CourseContentMapper;
 import cn.wyslkl.server.mapper.CourseMapper;
 import cn.wyslkl.server.mapper.my.MyCourseMapper;
@@ -32,8 +31,20 @@ public class CourseService {
     @Resource
     private MyCourseMapper myCourseMapper;
 
+   // @Resource
+   // private CourseCategoryService courseCategoryService;
+
     @Resource
     private CourseContentMapper courseContentMapper;
+
+    @Resource
+    private TeacherService teacherService;
+
+    @Resource
+    private ChapterService chapterService;
+
+    @Resource
+    private SectionService sectionService;
 
     /**
      * 列表查询
@@ -119,4 +130,50 @@ public class CourseService {
         }
         return i;
     }
+
+    /**
+     * 新课列表查询，只查询已发布的，按创建日期倒序
+     */
+    public List<CourseDto> listNew(PageDto pageDto) {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
+        CourseExample courseExample = new CourseExample();
+        courseExample.createCriteria().andStatusEqualTo(CourseStatusEnum.PUBLISH.getCode());
+        courseExample.setOrderByClause("created_at desc");
+        List<Course> courseList = courseMapper.selectByExample(courseExample);
+        return CopyUtil.copyList(courseList, CourseDto.class);
+    }
+
+    /**
+     * 查找某一课程，供web模块用，只能查已发布的
+     * @param id
+     * @return
+
+    public CourseDto findCourse(String id) {
+        Course course = courseMapper.selectByPrimaryKey(id);
+        if (course == null || !CourseStatusEnum.PUBLISH.getCode().equals(course.getStatus())) {
+            return null;
+        }
+        CourseDto courseDto = CopyUtil.copy(course, CourseDto.class);
+
+        // 查询内容
+        CourseContent content = courseContentMapper.selectByPrimaryKey(id);
+        if (content != null) {
+            courseDto.setContent(content.getContent());
+        }
+
+        // 查找讲师信息
+        TeacherDto teacherDto = teacherService.findById(courseDto.getTeacherId());
+        courseDto.setTeacher(teacherDto);
+
+        // 查找章信息
+        List<ChapterDto> chapterDtoList = chapterService.listByCourse(id);
+        courseDto.setChapters(chapterDtoList);
+
+        // 查找节信息
+        List<SectionDto> sectionDtoList = sectionService.listByCourse(id);
+        courseDto.setSections(sectionDtoList);
+
+        return courseDto;
+    }
+     */
 }
