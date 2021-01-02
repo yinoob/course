@@ -303,7 +303,7 @@
                 <li class="divider"></li>
 
                 <li>
-                  <a  href="#">
+                  <a  v-on:click="logout()" href="#">
                     <i class="ace-icon fa fa-power-off"></i>
                     退出登录
                   </a>
@@ -359,7 +359,7 @@
           </li>
 
           <li  class="">
-            <a href="#" class="dropdown-toggle">
+            <a href="" class="dropdown-toggle">
               <i class="menu-icon fa fa-list"></i>
               <span class="menu-text"> 系统管理 </span>
 
@@ -399,7 +399,7 @@
           </li>
 
           <li  class="">
-            <a href="#" class="dropdown-toggle">
+            <a href="" class="dropdown-toggle">
               <i class="menu-icon fa fa-list"></i>
               <span class="menu-text"> 业务管理 </span>
 
@@ -463,7 +463,7 @@
           </li>
 
           <li  class="">
-            <a href="#" class="dropdown-toggle">
+            <a href="" class="dropdown-toggle">
               <i class="menu-icon fa fa-list"></i>
               <span class="menu-text"> 文件管理 </span>
 
@@ -539,6 +539,9 @@
 </template>
 
 <script>
+  import axios from "axios";
+  import qs from "qs";
+
   export default {
     name: "admin",
     data: function () {
@@ -572,7 +575,26 @@
     methods:{
       login(){
         this.$router.push("/admin")
-      }
+      },
+
+
+      logout(){
+
+        let _this = this;
+
+        axios.get(process.env.VUE_APP_SERVER + '/system/admin/user/logout').then((response) => {
+          //Loading.hide();
+          let resp = response.data;
+          if (resp.success) {
+            console.log(resp.content);
+           Tool.setLoginUser(null);
+            _this.$router.push("/login")
+          } else {
+            Toast.warning(resp.message)
+          }
+        });
+
+      },
     },
     /**
      * 菜单激活样式，id是当前点击的菜单的id
@@ -590,6 +612,10 @@
         parentLi.siblings().find("li").removeClass("active");
         parentLi.addClass("open active");
       }
+    },
+    logout(){
+      Tool.setLoginUser(null);
+
     },
   }
 </script>

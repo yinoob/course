@@ -129,10 +129,11 @@ public class UserController {
      * 登录
      */
     @PostMapping("/login")
-    public ResponseDto Login( UserDto userDto) {
+    public ResponseDto Login( UserDto userDto,HttpServletRequest request) {
         userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
         ResponseDto responseDto = new ResponseDto();
         LoginUserDto loginUserDto=userService.login(userDto);
+        request.getSession().setAttribute(Constants.LOGIN_USER,loginUserDto);
         responseDto.setContent(loginUserDto);
         return responseDto;
     }
@@ -140,12 +141,12 @@ public class UserController {
     /**
      * 退出登录
      */
-    @GetMapping("/logout/{token}")
-    public ResponseDto logout(@PathVariable String token) {
+    @GetMapping("/logout")
+    public ResponseDto logout(HttpServletRequest request) {
         ResponseDto responseDto = new ResponseDto();
-//        request.getSession().removeAttribute(Constants.LOGIN_USER);
-        redisTemplate.delete(token);
-        LOG.info("从redis中删除token:{}", token);
+        request.getSession().removeAttribute(Constants.LOGIN_USER);
+        //redisTemplate.delete(token);
+        //LOG.info("从redis中删除token:{}", token);
         return responseDto;
     }
 }
