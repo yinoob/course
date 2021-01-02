@@ -1,34 +1,13 @@
 <template>
   <main role="main">
 
-    <section class="jumbotron text-center">
-      <div class="container">
-        <h1>在线视频课程平台</h1>
-        <p class="lead text-muted m-3">
-          知识付费时代刚刚起步，在这个领域有很多的发展机会。整个课程以实战为基础，手把手从零开始，一步一步搭建一个完整的企业级开发架构。不讲废话，只讲干货。
-        </p>
-        <p>
-          <router-link to="/list" class="btn btn-primary my-2 p-3 font-weight-bold">点击进入所有课程</router-link>
-        </p>
-      </div>
-    </section>
-
     <div class="album py-5 bg-light">
       <div class="container">
-        <div class="title1">最新上线</div>
         <div class="row">
-          <div v-for="o in news" class="col-md-4">
+          <div v-for="o in courses" class="col-md-4">
             <the-course v-bind:course="o"></the-course>
           </div>
-        </div>
-
-        <hr>
-
-        <div class="title1">好课推荐</div>
-        <div class="row">
-          <div v-for="o in news" class="col-md-4">
-            <the-course v-bind:course="o"></the-course>
-          </div>
+          <h3 v-show="courses.length === 0">课程还未上架</h3>
         </div>
       </div>
     </div>
@@ -40,23 +19,24 @@
 
   import TheCourse from "../components/the-course";
   import axios from 'axios';
+  import qs from 'qs';
   export default {
-    name: 'index',
     components: {TheCourse},
+    name: 'list',
     data: function () {
       return {
-        news: [],
+        courses: [],
       }
     },
     mounted() {
       let _this = this;
-      _this.listNew();
+      _this.listCourse(1);
     },
     methods: {
       /**
-       * 查询新上好课
+       * 查询课程列表
       */
-      listNew() {
+      listCourse(page) {
         let _this = this;
 
         // 新上好课不经常变，又经常被访问，适合用缓存
@@ -67,11 +47,15 @@
        //   return;
        // }
 
-        axios.get(process.env.VUE_APP_SERVER + '/business/web/course/list-new').then((response)=>{
-          console.log("查询新上好课结果：", response);
+        axios.post(process.env.VUE_APP_SERVER + '/business/web/course/list',
+        qs.stringify({
+          page: page,
+          size: 3,
+        })).then((response)=>{
+          console.log("查询课程列表结果：", response);
           let resp = response.data;
           if (resp.success) {
-            _this.news = resp.content;
+            _this.courses = resp.content.list;
             // 保存到缓存
            // SessionStorage.set("news", _this.news);
           }

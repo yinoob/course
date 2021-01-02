@@ -41,7 +41,7 @@ public class CourseController {
      * 列表查询
      */
     @PostMapping("/list")
-    public ResponseDto list(@RequestBody CoursePageDto pageDto) {
+    public ResponseDto list( CoursePageDto pageDto) {
         ResponseDto responseDto = new ResponseDto();
         pageDto.setStatus(CourseStatusEnum.PUBLISH.getCode());
         courseService.list(pageDto);
