@@ -108,8 +108,15 @@
 
       login() {
         let _this = this;
-        let passwordShow=_this.user.password;
-        _this.user.password=hex_md5(_this.user.password+KEY);
+        //let passwordShow=_this.user.password;
+        //如果密码是从缓存带出来的,则不需要加密
+        let md5=hex_md5(_this.user.password);
+        let rememberUser=LocalStorage.get(LOCAL_KEY_REMEMBER_USER)||{};
+        if(md5!==rememberUser.md5){
+          _this.user.password=hex_md5(_this.user.password+KEY);
+        }
+
+        //_this.user.password=hex_md5(_this.user.password+KEY);
         axios.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', qs.stringify(_this.user)).then((response) => {
           //Loading.hide();
           let resp = response.data;
@@ -117,10 +124,14 @@
             console.log("登录成功",resp.content);
             let loginUser=resp.content;
             Tool.setLoginUser(resp.content);
+            //这里保存密码密文，并保存密文md5，用于检测密码是否被重新输入过
             if(_this.remember){
+
+              let md5=hex_md5(_this.user.password);
               LocalStorage.set(LOCAL_KEY_REMEMBER_USER,{
                 loginName: loginUser.loginName,
-                password: passwordShow
+                password: _this.user.password,
+                md5: md5,
               });
             }else{
               LocalStorage.set(LOCAL_KEY_REMEMBER_USER,null);
