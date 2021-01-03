@@ -29,24 +29,26 @@
               </div>
             </li>
           </ul>
-          <!--<span v-show="loginMember.id" class="text-white pr-3">您好：{{loginMember.name}}</span>
+          <span v-show="loginMember.id" class="text-white pr-3">您好：{{loginMember.name}}</span>
           <button v-show="loginMember.id" v-on:click="logout()" class="btn btn-outline-light my-2 my-sm-0">退出登录</button>
-          <button v-show="!loginMember.id" v-on:click="openLoginModal()" class="btn btn-outline-light my-2 my-sm-0">登录/注册</button>-->
+          <button v-show="!loginMember.id" v-on:click="openLoginModal()" class="btn btn-outline-light my-2 my-sm-0">登录/注册</button>
         </div>
       </div>
     </nav>
 
-    <!--<the-login ref="loginComponent"></the-login>-->
+    <the-login ref="loginComponent"></the-login>
   </header>
 </template>
 
 <script>
 
-  //import TheLogin from "./login";
+  import TheLogin from "./login";
+  import axios from "axios";
+  import qs from "qs";
   export default {
     name: 'theHeader',
-   // components: {TheLogin},
-   /* data: function () {
+    components: {TheLogin},
+    data: function () {
       return {
         loginMember: {}
       }
@@ -58,7 +60,7 @@
     methods: {
       /**
        * 打开登录注册窗口
-
+      */
       openLoginModal() {
         let _this = this;
         _this.$refs.loginComponent.openLoginModal();
@@ -71,7 +73,7 @@
 
       logout () {
         let _this = this;
-        _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/logout/' + _this.loginMember.token).then((response)=>{
+        axios.get(process.env.VUE_APP_SERVER + '/business/web/member/logout/' + qs.stringify(_this.loginMember.token)).then((response)=>{
           let resp = response.data;
           if (resp.success) {
             Tool.setLoginMember(null);
@@ -85,7 +87,7 @@
       },
 
     }
-  */
+
 
   }
 </script>

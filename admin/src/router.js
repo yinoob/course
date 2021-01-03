@@ -9,6 +9,9 @@ import Course from "./views/admin/course.vue"
 import Category from "./views/admin/category.vue"
 import Teacher from "./views/admin/teacher.vue"
 import File from "./views/admin/file.vue"
+import Member from "./views/admin/member.vue"
+import Sms from "./views/admin/sms.vue"
+
 //import Content from "./views/admin/content.vue"
 import User from "./views/admin/user.vue"
 import Resource from "./views/admin/resource.vue"
@@ -80,11 +83,14 @@ export default new Router({
             path: "system/role",
             name: "system/role",
             component: Role,
-        }
-            /** {
-            path: "business/content",
-            name: "business/content",
-            component: Content,
-        }**/]
+        },{
+            path: "business/member",
+            name: "business/member",
+            component: Member,
+        },{
+            path: "business/sms",
+            name: "business/sms",
+            component: Sms,
+        }]
     }]
 })

@@ -209,3 +209,32 @@ create table role_user(
 
 insert into role_user values (000000,000000,000000);
 insert into role_user values (000001,000000,'VVbrthEW');
+
+drop table if exists member;
+create table member(
+    id char(8) not null default '' comment 'id',
+    mobile varchar(11) comment '手机号',
+    password char(32) not null comment '密码',
+    name varchar(50) comment '昵称',
+    photo varchar(200) comment '头像url',
+    register_time datetime comment '注册时间',
+    primary key (id),
+    unique key mobile_unique (mobile)
+)engine=innodb default charset =utf8mb4 comment= '会员表';
+
+insert into member values ('000001',12345678901,123456,'松哥',null,now());
+
+#短信验证码
+drop table if exists sms;
+create table sms(
+    id char(8) not null default '' comment 'id',
+    mobile varchar(50) not null comment '手机号',
+    code char(6) not null comment '验证码',
+    used char(1) not null comment '用途|枚举[SmsUseEnum]:REGISTER("R","注册"),FORGET("F","忘记密码")',
+    at datetime not null comment '生成时间',
+    status char(1) not null comment '状态|枚举[SmsStatus]:USED("U","已使用”),NOT_USE("N","未使用")',
+                primary key (id)
+)engine=innodb default charset=utf8mb4  comment='短信验证码';
+
+
+insert into sms values ('000001',12345678901,'123456','R',now(),'N');
