@@ -149,13 +149,13 @@ public class CourseService {
      * @return
      * */
 
-    public CourseDto findCourse(String id) {
+    public CourseDetailDto findCourse(String id) {
         Course course = courseMapper.selectByPrimaryKey(id);
         LOG.info(course.toString());
       //  if (course == null || !CourseStatusEnum.PUBLISH.getCode().equals(course.getStatus())) {
       //      return null;
       //  }
-        CourseDto courseDto = CopyUtil.copy(course, CourseDto.class);
+        CourseDetailDto courseDetailDto = CopyUtil.copy(course, CourseDetailDto.class);
 
         /**
         // 查询内容
@@ -166,18 +166,18 @@ public class CourseService {
          **/
 
         // 查找讲师信息
-        TeacherDto teacherDto = teacherService.findById(courseDto.getTeacherId());
-        courseDto.setTeacher(teacherDto);
+        TeacherDto teacherDto = teacherService.findById(courseDetailDto.getTeacherId());
+        courseDetailDto.setTeacher(teacherDto);
 
         // 查找章信息
         List<ChapterDto> chapterDtoList = chapterService.listByCourse(id);
-        courseDto.setChapters(chapterDtoList);
+        courseDetailDto.setChapters(chapterDtoList);
 
         // 查找节信息
         List<SectionDto> sectionDtoList = sectionService.listByCourse(id);
-        courseDto.setSections(sectionDtoList);
+        courseDetailDto.setSections(sectionDtoList);
 
-        return courseDto;
+        return courseDetailDto;
     }
 
 

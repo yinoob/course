@@ -60,9 +60,9 @@
                 <i class="ace-icon fa fa-pencil bigger-120"></i>
                 大章
               </button>&nbsp;&nbsp;
-              <button v-on:click="toContent(course)" class="btn btn-white btn-xs btn-info btn-round">
+             <!-- <button v-on:click="toContent(course)" class="btn btn-white btn-xs btn-info btn-round">
                 内容
-              </button>&nbsp;
+              </button>&nbsp;-->
               <button v-on:click="edit(course)" class="btn btn-xs btn-info">
                 <i class="ace-icon fa fa-pencil bigger-120"></i>
                 编辑

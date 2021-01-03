@@ -552,9 +552,13 @@
     mounted: function() {
       let _this=this;
       $("body").removeClass("login-layout light-login");
-      $("body").attr("class","noskin");
+      $("body").attr("class","no-skin");
 
-      _this.loginUser=SessionStorage.get("USER");
+      //_this.loginUser=SessionStorage.get("USER");
+
+      $.getScript('/ace/assets/js/ace.min.js');
+
+      _this.loginUser = Tool.getLoginUser();
     },
     watch: {
       $route: {
@@ -562,6 +566,7 @@
           // sidebar激活样式方法二
           console.log("---->页面跳转：", val, oldVal);
           let _this = this;
+
           if (!_this.hasResourceRouter(val.name)) {
             _this.$router.push("/login");
             return;

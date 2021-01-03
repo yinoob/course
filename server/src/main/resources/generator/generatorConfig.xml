@@ -62,7 +62,9 @@
             <table tableName="user" domainObjectName="User"/>
             <table tableName="resource" domainObjectName="Resource"/>
             <table tableName="role_resource" domainObjectName="RoleResource"/>
-            <table tableName="role_user" domainObjectName="RoleUser"/>-->
-            <table tableName="sms" domainObjectName="Sms"/>
+            <table tableName="role_user" domainObjectName="RoleUser"/>
+            <table tableName="sms" domainObjectName="Sms"/>-->
+            <table tableName="member_course" domainObjectName="MemberCourse"/>
+
     </context>
 </generatorConfiguration>

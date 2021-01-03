@@ -27,8 +27,9 @@
   import axios from 'axios';
   import qs from 'qs';
   import Pagination from "../components/pagination";
+  import TheHeader from "../components/the-header";
   export default {
-    components: {Pagination, TheCourse},
+    components: {TheHeader, Pagination, TheCourse},
     name: 'list',
     data: function () {
       return {
@@ -38,8 +39,8 @@
     },
     mounted() {
       let _this = this;
-      _this.$refs.pagination.size=1;
-      _this.listCourse(1);
+      _this.$refs.pagination.size=2;
+      _this.listCourse(2);
 
     },
     methods: {

@@ -67,8 +67,8 @@ public class CourseController {
     public ResponseDto findCourse(@PathVariable String id) {
         LOG.info("查找课程开始：{}", id);
         ResponseDto responseDto = new ResponseDto();
-        CourseDto courseDto = courseService.findCourse(id);
-        responseDto.setContent(courseDto);
+        CourseDetailDto courseDetailDto = courseService.findCourse(id);
+        responseDto.setContent(courseDetailDto);
         LOG.info("查找课程结束：{}", responseDto);
         return responseDto;
     }

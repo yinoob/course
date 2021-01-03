@@ -1,13 +1,13 @@
 package cn.wyslkl.server.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
-public class CourseDto {
+public class CourseDetailDto {
 
     /**
      * id
@@ -79,7 +79,6 @@ public class CourseDto {
     private Date updatedAt;
 
     private String teacherId;
-    /*
 
     private List<ChapterDto> chapters;
 
@@ -88,8 +87,6 @@ public class CourseDto {
 
 
     private TeacherDto teacher;
-
-     */
 
 
 
@@ -208,7 +205,7 @@ public class CourseDto {
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
     }
-/*
+
     public List<ChapterDto> getChapters() {
         return chapters;
     }
@@ -233,7 +230,7 @@ public class CourseDto {
     public void setTeacher(TeacherDto teacher) {
         this.teacher = teacher;
     }
-*/
+
     @Override
     public String toString() {
         return "CourseDto{" +
@@ -250,9 +247,9 @@ public class CourseDto {
                 ", sort=" + sort +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                //", chapters=" + chapters +
-                //", sections=" + sections +
-                //", teacher=" + teacher +
+                ", chapters=" + chapters +
+                ", sections=" + sections +
+                ", teacher=" + teacher +
                 ", teacherId='" + teacherId + '\'' +
                 '}';
     }
