@@ -4,7 +4,10 @@ import cn.wyslkl.server.domain.Course;
 import cn.wyslkl.server.domain.CourseContent;
 import cn.wyslkl.server.dto.*;
 import cn.wyslkl.server.enums.CourseStatusEnum;
+import cn.wyslkl.server.service.ChapterService;
 import cn.wyslkl.server.service.CourseService;
+import cn.wyslkl.server.service.SectionService;
+import cn.wyslkl.server.service.TeacherService;
 import cn.wyslkl.server.util.CopyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,17 @@ public class CourseController {
 
     @Resource
     private CourseService courseService;
+
+    @Resource
+    private TeacherService teacherService;
+
+    @Resource
+    private ChapterService chapterService;
+
+    @Resource
+    private SectionService sectionService;
+
+
 
     /**
      * 列表查询，查询最新的3门已发布的课程
@@ -48,8 +62,8 @@ public class CourseController {
         responseDto.setContent(pageDto);
         return responseDto;
     }
-/*
-    @GetMapping("/find/{id}")
+
+    @GetMapping("/find/id={id}")
     public ResponseDto findCourse(@PathVariable String id) {
         LOG.info("查找课程开始：{}", id);
         ResponseDto responseDto = new ResponseDto();

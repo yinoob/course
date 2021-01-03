@@ -147,19 +147,23 @@ public class CourseService {
      * 查找某一课程，供web模块用，只能查已发布的
      * @param id
      * @return
+     * */
 
     public CourseDto findCourse(String id) {
         Course course = courseMapper.selectByPrimaryKey(id);
-        if (course == null || !CourseStatusEnum.PUBLISH.getCode().equals(course.getStatus())) {
-            return null;
-        }
+        LOG.info(course.toString());
+      //  if (course == null || !CourseStatusEnum.PUBLISH.getCode().equals(course.getStatus())) {
+      //      return null;
+      //  }
         CourseDto courseDto = CopyUtil.copy(course, CourseDto.class);
 
+        /**
         // 查询内容
         CourseContent content = courseContentMapper.selectByPrimaryKey(id);
         if (content != null) {
             courseDto.setContent(content.getContent());
         }
+         **/
 
         // 查找讲师信息
         TeacherDto teacherDto = teacherService.findById(courseDto.getTeacherId());
@@ -175,5 +179,6 @@ public class CourseService {
 
         return courseDto;
     }
-     */
+
+
 }
