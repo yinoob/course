@@ -4,9 +4,9 @@ import router from './router'
 import axios from "axios"
 import filter from './filter/filter'
 
-import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
+//import $ from 'jquery';
+//window.jQuery = $;
+//window.$ = $;
 
 import Axios from 'axios'
 import VueAxios from 'vue-axios'
